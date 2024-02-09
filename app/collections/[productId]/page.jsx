@@ -30,7 +30,7 @@ const ProductDetailsPage = ({ params }) => {
 
   return (
     <>
-      <div className="container pt-4 pl-16">
+      <div className="flex flex-start container mt-4">
         <Button variant={"secondary"} onClick={() => router.back()}>
           Back
         </Button>

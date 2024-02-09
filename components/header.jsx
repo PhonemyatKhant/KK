@@ -4,6 +4,15 @@ import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 function Header() {
   const { status, data: session } = useSession();
   return (
@@ -30,19 +39,48 @@ function Header() {
         <Link className="flex items-center justify-center gap-4" href="">
           {status === "authenticated" ? (
             <>
-              <Button variant={"ghost"} size={"sm"}>
-                <span onClick={() => signOut()}>Sign Out</span>
-              </Button>
-              <Avatar>
-                <AvatarImage src={session?.user?.image} alt="user image" />
-                <AvatarFallback>
-                  {session?.user?.name[0]}
-                  {session?.user?.name[1]}
-                </AvatarFallback>
-              </Avatar>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Avatar>
+                    <AvatarImage src={session?.user?.image} alt="user image" />
+                    <AvatarFallback>
+                      {session?.user?.name[0]}
+                      {session?.user?.name[1]}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Button variant={"ghost"} size={"sm"}>
+                      <span>Profile</span>
+                    </Button>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    {session?.user?.email === "phonemyatkhant46@gmail.com" && (
+                      <Link href="/admin-products/create-product">
+                        <Button variant={"ghost"} size={"sm"}>
+                          <span>Products</span>
+                        </Button>
+                      </Link>
+                    )}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Button variant={"ghost"} size={"sm"}>
+                      <span>Orders</span>
+                    </Button>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Button variant={"ghost"} size={"sm"}>
+                      <span onClick={() => signOut()}>Sign Out</span>
+                    </Button>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </>
           ) : (
-            <Button variant={"ghost"} size={"sm"}>
+            <Button variant={"default"} size={"sm"}>
               <span onClick={() => signIn("google")}>Sign In</span>
             </Button>
           )}
