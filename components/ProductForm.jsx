@@ -11,10 +11,10 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
   const router = useRouter();
   const handleChange = (e) => {
     const { id, value } = e.target;
-    console.log(id, value);
+    
     setFormData((prevData) => ({
       ...prevData,
-      [id]: id !== "isFeaturedProduct" ? value : checked,
+      [id]: id !== "sdf" ? value : checked,
     }));
   };
   return (
@@ -51,7 +51,19 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
           </div>
           <div className="grid w-full max-w-lg items-center gap-1.5">
             <Label htmlFor="imgae">Imgae</Label>
-            <Input id="imgae" type="file" />
+            <input
+              id="image"
+              type="file"
+              onChange={(e) =>{
+                console.log(e.target.files);
+                setFormData((prevData) => ({
+                  ...prevData,
+                  //image: e.target.file?.[0],
+                  
+                }))
+              }
+              }
+            />
           </div>
           <div className="grid w-full max-w-lg items-center gap-1.5">
             <Label htmlFor="brand">Brand</Label>

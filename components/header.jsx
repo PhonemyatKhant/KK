@@ -59,7 +59,7 @@ function Header() {
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     {session?.user?.email === "phonemyatkhant46@gmail.com" && (
-                      <Link href="/admin-products/create-product">
+                      <Link href="/admin-products">
                         <Button variant={"ghost"} size={"sm"}>
                           <span>Products</span>
                         </Button>
