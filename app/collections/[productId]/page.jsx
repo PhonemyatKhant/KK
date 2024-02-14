@@ -22,7 +22,7 @@ const ProductDetailsPage = ({ params }) => {
         setProduct(productData);
       } catch (error) {
         console.error(error);
-        // Handle error appropriately (e.g., redirect to error page)
+        // Handle error redirect
       }
     };
     getProduct();

@@ -1,6 +1,6 @@
 import ProductCard from "@/components/productCard";
 
-async function getProducts() {
+export async function getProducts() {
   const apiEndpoint = process.env.API_ENDPOINT;
 
   const res = await fetch(`http://localhost:3000/api/products?${Date.now()}`);
