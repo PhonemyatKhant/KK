@@ -11,11 +11,26 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
   const router = useRouter();
   const handleChange = (e) => {
     const { id, value } = e.target;
-    
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: id !== "sdf" ? value : checked,
-    }));
+    if (id === "image") {
+      setFileToBase(e.target.files[0]);
+      console.log(e.target.files[0]);
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [id]: id !== "sdf" ? value : checked,
+      }));
+    }
+    console.log(formData);
+  };
+  const setFileToBase = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setFormData((prevData) => ({
+        ...prevData,
+        image: reader.result,
+      }));
+    };
   };
   return (
     <>
@@ -51,19 +66,7 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
           </div>
           <div className="grid w-full max-w-lg items-center gap-1.5">
             <Label htmlFor="imgae">Imgae</Label>
-            <input
-              id="image"
-              type="file"
-              onChange={(e) =>{
-                console.log(e.target.files);
-                setFormData((prevData) => ({
-                  ...prevData,
-                  //image: e.target.file?.[0],
-                  
-                }))
-              }
-              }
-            />
+            <Input id="image" type="file" onChange={handleChange} />
           </div>
           <div className="grid w-full max-w-lg items-center gap-1.5">
             <Label htmlFor="brand">Brand</Label>

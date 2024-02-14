@@ -35,15 +35,17 @@ const ProductDetailsPage = ({ params }) => {
           Back
         </Button>
       </div>
-      <div className="container flex flex-col md:flex-row items-center gap-10 mx-auto py-10">
-        <div className="container h-96 w-full md:w-1/2">
-          <img
-            className="object-cover h-full w-full rounded-lg shadow-md"
+      <div className="container flex flex-col md:flex-row items-center gap-10 mx-auto py-10 max-w-screen-xl">
+        <div className="flex-1 container h-96 w-full md:w-1/2">
+          <Image
+            className="object-fill h-full w-full rounded-lg shadow-md"
             src={product?.image}
             alt={product?.name}
+            width={64}
+            height={64}
           />
         </div>
-        <div className=" container max-h-96 flex-grow md:w-1/2 space-y-8">
+        <div className=" container max-h-96 md:w-1/2 space-y-8 flex-1">
           <h1 className="text-2xl font-bold">{product?.name}</h1>
           <p className="text-xl font-semibold text-gray-700 mb-2">
             ${product?.price}
