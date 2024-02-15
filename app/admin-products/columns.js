@@ -1,5 +1,5 @@
 "use client"
-
+import { useRouter } from "next/navigation";
 import { ColumnDef } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 // This type is used to define the shape of our data.
@@ -13,6 +13,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+// import { handleDelete, handleEdit } from "@/utils/editDelete"
 
 export const columns = [
     {
@@ -41,8 +42,15 @@ export const columns = [
             // console.log(row.getValue('_id'));
 
             const product = row.original
-            // console.log(product);
-
+            const router = useRouter()
+            const handleEdit = (product) => {
+                
+                router.push(`/admin-products/edit-product?productId=${product._id}`);
+                console.log('edit');
+            }
+            const handleDelete = (product) => {
+                console.log('delete');
+            }
             return (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -59,8 +67,8 @@ export const columns = [
                             Copy Product ID
                         </DropdownMenuItem> */}
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem onClick={() => { console.log(product.name) }}>Edit Product</DropdownMenuItem>
-                        <DropdownMenuItem>Delete Product</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleEdit(product)}>Edit Product</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleDelete(product)}>Delete Product</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

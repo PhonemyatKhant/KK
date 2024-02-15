@@ -13,14 +13,13 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
     const { id, value } = e.target;
     if (id === "image") {
       setFileToBase(e.target.files[0]);
-      console.log(e.target.files[0]);
     } else {
       setFormData((prevData) => ({
         ...prevData,
         [id]: id !== "sdf" ? value : checked,
       }));
     }
-    console.log(formData);
+    // console.log(formData);
   };
   const setFileToBase = (file) => {
     const reader = new FileReader();
