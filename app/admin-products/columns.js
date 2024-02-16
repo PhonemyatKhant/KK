@@ -1,7 +1,8 @@
 "use client"
 import { useRouter } from "next/navigation";
 import { ColumnDef } from "@tanstack/react-table"
-import { MoreHorizontal } from "lucide-react"
+
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 import { Button } from "@/components/ui/button"
@@ -13,7 +14,9 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-// import { handleDelete, handleEdit } from "@/utils/editDelete"
+import { getProducts } from "../collections/page";
+
+
 
 export const columns = [
     {
@@ -22,7 +25,17 @@ export const columns = [
     },
     {
         accessorKey: "name",
-        header: "Name",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Name
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
     },
     {
         accessorKey: "price",
@@ -30,11 +43,31 @@ export const columns = [
     },
     {
         accessorKey: "category",
-        header: "Category",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Category
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
     },
     {
         accessorKey: "brand",
-        header: "Brand",
+        header: ({ column }) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Brand
+                    <ArrowUpDown className="ml-2 h-4 w-4" />
+                </Button>
+            )
+        },
     },
     {
         id: "actions",
@@ -44,12 +77,31 @@ export const columns = [
             const product = row.original
             const router = useRouter()
             const handleEdit = (product) => {
-                
+
                 router.push(`/admin-products/edit-product?productId=${product._id}`);
                 console.log('edit');
             }
-            const handleDelete = (product) => {
+            const handleDelete = async (product) => {
                 console.log('delete');
+                const hasConfirmed = confirm(
+                    "Are you sure you want to delete this prompt?"
+                );
+
+                if (hasConfirmed) {
+                    try {
+                        await fetch(`/api/products/${product._id.toString()}`, {
+                            method: "DELETE",
+                        });
+                        const products = await getProducts()
+                        console.log(products);
+                        // const filteredPosts = myPosts.filter((item) => item._id !== post._id);
+
+                        // setMyPosts(filteredPosts);
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+
             }
             return (
                 <DropdownMenu>

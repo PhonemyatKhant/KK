@@ -64,7 +64,7 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
             />
           </div>
           <div className="grid w-full max-w-lg items-center gap-1.5">
-            <Label htmlFor="imgae">Imgae</Label>
+            <Label htmlFor="image">Imgae</Label>
             <Input id="image" type="file" onChange={handleChange} />
           </div>
           <div className="grid w-full max-w-lg items-center gap-1.5">
