@@ -4,11 +4,23 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { addToCartHandler } from "@/utils/addToCart";
+
+import { addToCart } from "@/app/redux/slices/cartSlice";
+import { useDispatch } from "react-redux";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { logging } from "@/next.config";
 
 const ProductDetailsPage = ({ params }) => {
   const router = useRouter();
   const pId = params.productId;
+  const dispatch = useDispatch();
 
   const [product, setProduct] = useState();
   const [quantity, setQuantity] = useState(1);
@@ -29,6 +41,11 @@ const ProductDetailsPage = ({ params }) => {
     };
     getProduct();
   }, [pId]);
+
+  const addToCartHandler = () => {
+    const initialState = localStorage.getItem('cartItems') ? { cartItems: JSON.parse(localStorage.getItem("cartItems")) } : { cartItems: [] }
+    dispatch(addToCart({ ...product, quantity }));
+  };
 
   if (product) {
     return (
@@ -67,13 +84,33 @@ const ProductDetailsPage = ({ params }) => {
                 max={product?.countInStock}
                 value={quantity}
                 onChange={(e) => {
-                  setQuantity(e.target.value);
+                  setQuantity(Number(e.target.value));
+                  console.log(quantity);
                 }}
                 className="px-3 py-2 rounded-md border border-gray-300 shadow-sm"
               />
+              {/* <Select
+                onValueChange={(e, index) => {
+                  setQuantity(Number(e + 1));
+                  console.log(index);
+                  // console.log(quantity);
+                }}
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="1" />
+                </SelectTrigger>
+                <SelectContent>
+                 
+                  {[...Array(product.countInStock).keys()].map((x) => (
+                    <SelectItem key={x} value={x}>
+                      {x}{" "}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select> */}
             </div>
             <Button
-              onClick={() => addToCartHandler(product, quantity)}
+              onClick={() => addToCartHandler()}
               size="sm"
               disabled={product?.countInStock === 0}
             >

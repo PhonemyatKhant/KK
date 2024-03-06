@@ -55,14 +55,14 @@ function Header() {
                   <Link href="/cart">
                     <Button variant={"ghost"} size={"sm"}>
                       Cart
-                      <Badge className="p-0 px-1 relative bottom-2 right-1">
+                      {/* <Badge className="p-0 px-1 relative bottom-2 right-1">
                         {cartData
                           ? cartData.reduce(
                               (acc, item) => acc + item.quantity,
                               0
                             )
                           : 0}
-                      </Badge>
+                      </Badge> */}
                     </Button>
                   </Link>
                   <Link href="/collections">
@@ -98,11 +98,11 @@ function Header() {
         <Link href="/cart">
           <Button variant={"ghost"} size={"sm"}>
             Cart
-            <Badge className="p-0 px-1 relative bottom-2 right-1">
+            {/* <Badge className="p-0 px-1 relative bottom-2 right-1">
               {cartData
                 ? cartData.reduce((acc, item) => acc + item.quantity, 0)
                 : 0}
-            </Badge>
+            </Badge> */}
           </Button>
         </Link>
         <Link className="flex items-center justify-center gap-4" href="">
