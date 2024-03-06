@@ -4,12 +4,14 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { addToCartHandler } from "@/utils/addToCart";
 
 const ProductDetailsPage = ({ params }) => {
   const router = useRouter();
   const pId = params.productId;
 
   const [product, setProduct] = useState();
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const getProduct = async () => {
@@ -63,12 +65,18 @@ const ProductDetailsPage = ({ params }) => {
                 type="number"
                 min={1}
                 max={product?.countInStock}
-                value={1}
-                onChange={(e) => {}}
+                value={quantity}
+                onChange={(e) => {
+                  setQuantity(e.target.value);
+                }}
                 className="px-3 py-2 rounded-md border border-gray-300 shadow-sm"
               />
             </div>
-            <Button size="sm" disabled={product?.countInStock === 0}>
+            <Button
+              onClick={() => addToCartHandler(product, quantity)}
+              size="sm"
+              disabled={product?.countInStock === 0}
+            >
               Add to Cart
             </Button>
             <p className="text-gray-500">{product?.description}</p>

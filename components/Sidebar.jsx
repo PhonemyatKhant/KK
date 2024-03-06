@@ -8,11 +8,18 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "./ui/label";
 import { Toggle } from "@/components/ui/toggle";
 
-const Sidebar = ({ brandOptions, categoryOptions, maxPrice ,isLoading}) => {
+const Sidebar = ({
+  brandOptions,
+  categoryOptions,
+  maxPrice,
+  sidebarData,
+  isLoading,
+}) => {
+  const [data, setData] = useState(sidebarData);
   const [value, setValue] = useState(maxPrice);
 
   return (
-    <aside className=" w-5/12 bg-white h-screen">
+    <aside className=" w-4/12 bg-white h-screen">
       <div className=" p-3 overflow-y-auto rounded h-full flex flex-col">
         <ul className="flex items-center justify-between p-4">
           <span>Out of Stock</span> <Switch />
@@ -21,8 +28,13 @@ const Sidebar = ({ brandOptions, categoryOptions, maxPrice ,isLoading}) => {
         <ul className="flex flex-col p-4">
           <span>Brand</span>
           <div className="flex flex-wrap gap-1 mt-1">
-            {brandOptions.map((option,index) => (
-              <Toggle key={index} aria-label="Toggle 2" variant="outline" size="sm">
+            {brandOptions.map((option, index) => (
+              <Toggle
+                key={index}
+                aria-label="Toggle 2"
+                variant="outline"
+                size="sm"
+              >
                 {option}
               </Toggle>
             ))}
@@ -32,8 +44,13 @@ const Sidebar = ({ brandOptions, categoryOptions, maxPrice ,isLoading}) => {
         <ul className="flex flex-col p-4">
           <span>Category</span>
           <div className="flex flex-wrap gap-1 mt-1">
-            {categoryOptions.map((option,index) => (
-              <Toggle key={index} aria-label="Toggle 2" variant="outline" size="sm">
+            {categoryOptions.map((option, index) => (
+              <Toggle
+                key={index}
+                aria-label="Toggle 2"
+                variant="outline"
+                size="sm"
+              >
                 {option}
               </Toggle>
             ))}
@@ -57,8 +74,8 @@ const Sidebar = ({ brandOptions, categoryOptions, maxPrice ,isLoading}) => {
               <Slider
                 id="maxlength"
                 onValueChange={setValue}
-                defaultValue={[value]}
-                max={maxPrice}
+                defaultValue={[maxPrice]}
+                max={value}
                 step={500}
               />
             </div>

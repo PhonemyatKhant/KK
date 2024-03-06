@@ -1,10 +1,12 @@
 "use client";
+
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Menu } from "lucide-react"
+import { Menu } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,11 +27,22 @@ import {
 function Header() {
   const { status, data: session } = useSession();
   const side = "left";
+  const [cartData, setCartData] = useState([]);
+
+  useEffect(() => {
+    // Retrieve cart items from localStorage
+    const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+    setCartData(storedCartItems);
+  }, []); // Watch for changes in cartData
+
   return (
     <header className="container bg-white py-4 px-6 flex items-center justify-between border-b border-gray-200 sm:flex-row">
+      {/* Header content */}
       <div className="sm:hidden">
         <Sheet key={side}>
-          <SheetTrigger><Menu className="h-4 w-4" /></SheetTrigger>
+          <SheetTrigger>
+            <Menu className="h-4 w-4" />
+          </SheetTrigger>
           <SheetContent side={side}>
             <SheetHeader>
               <SheetTitle>
@@ -43,7 +56,12 @@ function Header() {
                     <Button variant={"ghost"} size={"sm"}>
                       Cart
                       <Badge className="p-0 px-1 relative bottom-2 right-1">
-                        3
+                        {cartData
+                          ? cartData.reduce(
+                              (acc, item) => acc + item.quantity,
+                              0
+                            )
+                          : 0}
                       </Badge>
                     </Button>
                   </Link>
@@ -63,7 +81,6 @@ function Header() {
           </SheetContent>
         </Sheet>
       </div>
-
       <Link href="/">
         <h1 className="font-bold text-xl text-gray-800">KKFabrics</h1>
       </Link>
@@ -80,7 +97,12 @@ function Header() {
         </Link>
         <Link href="/cart">
           <Button variant={"ghost"} size={"sm"}>
-            Cart<Badge className="p-0 px-1 relative bottom-2 right-1">3</Badge>
+            Cart
+            <Badge className="p-0 px-1 relative bottom-2 right-1">
+              {cartData
+                ? cartData.reduce((acc, item) => acc + item.quantity, 0)
+                : 0}
+            </Badge>
           </Button>
         </Link>
         <Link className="flex items-center justify-center gap-4" href="">
