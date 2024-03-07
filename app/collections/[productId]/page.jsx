@@ -43,7 +43,9 @@ const ProductDetailsPage = ({ params }) => {
   }, [pId]);
 
   const addToCartHandler = () => {
-    const initialState = localStorage.getItem('cartItems') ? { cartItems: JSON.parse(localStorage.getItem("cartItems")) } : { cartItems: [] }
+    const initialState = localStorage.getItem("cartItems")
+      ? { cartItems: JSON.parse(localStorage.getItem("cartItems")) }
+      : { cartItems: [] };
     dispatch(addToCart({ ...product, quantity }));
   };
 
