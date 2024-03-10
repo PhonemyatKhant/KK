@@ -5,6 +5,7 @@ import Footer from "@/components/footer";
 import SessionProvider from "@/components/Provider";
 import { Providers } from "./redux/provider";
 import NextAuthProvider from "@/components/Provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,8 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <NextAuthProvider>
           <Header />
-          {children}
+          <main>{children}</main>
+          <Toaster />
           <Footer />
         </NextAuthProvider>
       </body>

@@ -16,6 +16,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { logging } from "@/next.config";
+import { useToast } from "@/components/ui/use-toast";
+import Link from "next/link";
+import { ToastAction } from "@radix-ui/react-toast";
 
 const ProductDetailsPage = ({ params }) => {
   const router = useRouter();
@@ -47,7 +50,22 @@ const ProductDetailsPage = ({ params }) => {
       ? { cartItems: JSON.parse(localStorage.getItem("cartItems")) }
       : { cartItems: [] };
     dispatch(addToCart({ ...product, quantity }));
+    toast({
+      title: `${quantity} ${
+        quantity > 1 ? "Items" : "Item"
+      } added to the cart.`,
+      description: `${product.name}`,
+      action: (
+        <Link href="/cart">
+          {" "}
+          <ToastAction altText="Go To Cart">
+            Go To Cart{" "}
+          </ToastAction>
+        </Link>
+      ),
+    });
   };
+  const { toast } = useToast();
 
   if (product) {
     return (
@@ -79,7 +97,7 @@ const ProductDetailsPage = ({ params }) => {
               <label htmlFor="quantity" className="mr-2 text-gray-700">
                 Quantity:
               </label>
-              <input
+              {/* <input
                 id="quantity"
                 type="number"
                 min={1}
@@ -90,26 +108,28 @@ const ProductDetailsPage = ({ params }) => {
                   console.log(quantity);
                 }}
                 className="px-3 py-2 rounded-md border border-gray-300 shadow-sm"
-              />
-              {/* <Select
-                onValueChange={(e, index) => {
-                  setQuantity(Number(e + 1));
-                  console.log(index);
-                  // console.log(quantity);
-                }}
-              >
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="1" />
-                </SelectTrigger>
-                <SelectContent>
-                 
-                  {[...Array(product.countInStock).keys()].map((x) => (
-                    <SelectItem key={x} value={x}>
-                      {x}{" "}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select> */}
+              /> */}
+              <div className=" mx-1 w-[70px]">
+                {" "}
+                <Select
+                  id="quantity"
+                  onValueChange={(quantity) => {
+                    setQuantity(quantity);
+                    console.log(quantity);
+                  }}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={1} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[...Array(product.countInStock).keys()].map((x) => (
+                      <SelectItem key={x} value={x + 1}>
+                        {x + 1}{" "}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
             <Button
               onClick={() => addToCartHandler()}
