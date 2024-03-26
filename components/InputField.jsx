@@ -13,6 +13,8 @@ export function InputField({
   name,
   placeholder = "example",
   type = "text",
+  onChange,
+  
 }) {
   return (
     <div className="relative mt-2 flex-1">
@@ -23,11 +25,21 @@ export function InputField({
           <FormItem>
             <FormLabel>{label}</FormLabel>
             <FormControl>
-              <Input
-                type={type ? type : "text"}
-                placeholder={placeholder}
-                {...field}
-              />
+              {!onChange ? (
+                <Input
+                  type={type ? type : "text"}
+                  placeholder={placeholder}
+                  {...field}
+                />
+              ) : (
+                <Input
+                  type={type ? type : "text"}
+                  placeholder={placeholder}
+                  {...field}
+                  onChange={onChange}
+                
+                />
+              )}
             </FormControl>
             <FormMessage />
           </FormItem>

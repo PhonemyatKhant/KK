@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+import { InputField } from "./InputField";
 
 const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
   const router = useRouter();
@@ -22,6 +23,7 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
     // console.log(formData);
   };
   const setFileToBase = (file) => {
+    console.log(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
@@ -64,7 +66,7 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
             />
           </div>
           <div className="grid w-full max-w-lg items-center gap-1.5">
-            <Label htmlFor="image">Imgae</Label>
+            <Label htmlFor="image">Image</Label>
             <Input id="image" type="file" onChange={handleChange} />
           </div>
           <div className="grid w-full max-w-lg items-center gap-1.5">
@@ -100,19 +102,7 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
               required
             />
           </div>
-          {/* <div className="flex items-center space-x-2">
-            <Checkbox
-              id="isFeaturedProduct"
-              checked={formData.isFeaturedProduct}
-              onCheckedChange={handleChange}
-            />
-            <label
-              htmlFor="isFeaturedProduct"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Featured Product?
-            </label>
-          </div> */}
+         
           <div className="grid w-full max-w-lg gap-1.5">
             <Label htmlFor="description">Product Descriptioin</Label>
             <Textarea

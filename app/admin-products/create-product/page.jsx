@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 
 import Form from "@/components/ProductForm";
+import CreateProductForm from "@/components/CreateProductForm";
 
 const CreateProductPage = () => {
   const router = useRouter();
@@ -59,6 +60,13 @@ const CreateProductPage = () => {
       submitting={submitting}
       handleSubmit={handleSubmit}
     />
+    // <CreateProductForm
+    //   type="Create"
+    //   formData={formData}
+    //   setFormData={setFormData}
+    //   submitting={submitting}
+    //   handleSubmit={handleSubmit}
+    // />
   );
 };
 

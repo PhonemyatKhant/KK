@@ -8,103 +8,154 @@ import { Button } from "./ui/button";
 import { Form } from "./ui/form";
 import { useRouter } from "next/navigation";
 import { InputField } from "./InputField";
-import { Separator } from "@radix-ui/react-dropdown-menu";
+import { Label, Separator } from "@radix-ui/react-dropdown-menu";
+import { Input } from "./ui/input";
+import NormalInputField from "./NormalInputField";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
-const BillingAddressForm = () => {
+const BillingAddressForm = ({
+  formData,
+  setFormData,
+  submitting,
+  handleSubmit,
+}) => {
   const router = useRouter();
 
-  const formSchema = z.object({
-    firstName: z.string().trim().min(1, { message: "This field is required." }),
-    lastName: z.string().trim().min(1, { message: "This field is required." }),
-    address: z.string().trim().min(1, { message: "This field is required." }),
-    apartment: z.string().trim().min(1, { message: "This field is required." }),
-    postalCode: z.coerce
-      .number()
-      .lte(999999, { message: "Please type in the actual postal code." })
-      .positive(),
-    phone: z.coerce
-      .number()
-      .lte(999999999999, { message: "Please type in the actual phone number." })
-      .positive(),
-    screenshot: z.string(),
-  });
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    if (id === "screenshot") {
+      setFileToBase(e.target.files[0]);
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [id]: id !== "sdf" ? value : checked,
+      }));
+    }
+    // console.log(formData);
+  };
+  const setFileToBase = (file) => {
+    console.log(file);
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setFormData((prevData) => ({
+        ...prevData,
+        screenshot: reader.result,
+      }));
+    };
+  };
 
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      firstName: "",
-      lastName: "",
-      address: "",
-      apartment: "",
-      screenshot: "",
-      postalCode: 111111,
-      phone: 959,
-    },
-  });
-
-  async function handleSubmit(values) {
-    console.log(values, "testing");
-
-    //POST
-  }
   return (
     <>
       <div className="max-w-[500px]">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleSubmit)}>
-            <div className="flex justify-between items-center gap-1 ">
-              <InputField
+        <div className="max-w-4xl py-8 pt-3">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="flex gap-3">
+              <NormalInputField
+                type="text"
                 label="First Name"
-                name="firstName"
-                form={form}
+                id="firstName"
                 placeholder="First Name"
+                required={true}
+                onChange={handleChange}
+                value={formData.firstName}
               />
-              <InputField
+              <NormalInputField
+                type="text"
                 label="Last Name"
-                name="lastName"
-                form={form}
+                id="lastName"
                 placeholder="Last Name"
+                required={true}
+                onChange={handleChange}
+                value={formData.lastName}
               />
             </div>
-            <InputField
+            <NormalInputField
+              type="text"
+              label="City"
+              id="city"
+              placeholder="City"
+              required={true}
+              onChange={handleChange}
+              value={formData.city}
+            />
+            <NormalInputField
+              type="text"
               label="Address"
-              name="address"
-              form={form}
+              id="address"
               placeholder="Address"
+              required={true}
+              onChange={handleChange}
+              value={formData.address}
             />
-            <InputField
+            <NormalInputField
+              type="text"
               label="Apartment"
-              name="apartment"
-              form={form}
+              id="apartment"
               placeholder="Apartment, suite, etc."
+              required={true}
+              onChange={handleChange}
+              value={formData.apartment}
             />
-            <InputField
+            <NormalInputField
+              type="text"
               label="Postal Code"
-              name="postalCode"
-              form={form}
+              id="postalCode"
               placeholder="Postal Code"
-              type="number"
+              required={true}
+              onChange={handleChange}
+              value={formData.postalCode}
             />
-            <InputField
+            <NormalInputField
+              type="text"
               label="Phone"
-              name="phone"
-              form={form}
+              id="phone"
               placeholder="Phone"
-              type="number"
+              required={true}
+              onChange={handleChange}
+              value={formData.phone}
             />
-            <Separator className="w-full  h-0.5 bg-neutral-400     my-4" />
+            <Separator className="h-0.5 w-full bg-slate-400 mt-4" />
             <h1 className=" text-2xl font-semibold my-3">Payment Screenshot</h1>
-            <InputField
-              name="screenshot"
-              form={form}
-              placeholder="Payment Screenshot"
+            <Select
+              onValueChange={(value) => {
+                setFormData((prevData) => ({
+                  ...prevData,
+                  paymentMethod: value,
+                }));
+              }}
+            >
+              <SelectTrigger className=" w-1/2">
+                <SelectValue placeholder="Select a payment method" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Payment Method</SelectLabel>
+                  <SelectItem value="KBZ BANK">KBZ BANK</SelectItem>
+                  <SelectItem value="KBZ PAY">KBZ PAY</SelectItem>
+                  <SelectItem value="WAVE PAY">WAVE PAY</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <NormalInputField
               type="file"
+              id="screenshot"
+              required={true}
+              onChange={handleChange}
             />
-            <Button type="submit" className="my-4 w-full">
+            <Button className="w-full" type="submit">
               Place Order
             </Button>
           </form>
-        </Form>
+        </div>
       </div>
     </>
   );

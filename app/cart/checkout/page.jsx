@@ -8,12 +8,73 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Image from "next/image";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useSession } from "next-auth/react";
 
 const CheckOutPage = () => {
+  const { data: session } = useSession();
   const { cartItems, itemsPrice, taxPrice, shippingPrice, totalPrice } =
     useSelector((state) => state.cart);
-  
+
+  const orderItems = cartItems.map((cartItem) => ({
+    name: cartItem.name,
+    qty: cartItem.quantity,
+    price: cartItem.price,
+    product: cartItem._id,
+  }));
+  // console.log(cartItems);
+
+  const [submitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    city: "",
+    address: "",
+    apartment: "",
+    postalCode: 111111,
+    phone: 959,
+    screenshot: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    console.log('handleSubmit');
+
+    try {
+      const response = await fetch("/api/orders/new", {
+        method: "POST",
+        body: JSON.stringify({
+          user: session?.user.id,
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          orderItems: orderItems,
+          shippingAddress: {
+            address: formData.address,
+            postalCode: formData.postalCode,
+            city: formData.city,
+          },
+          paymentMethod: formData.paymentMethod,
+          screenshot: formData.screenshot,
+          itemsPrice,
+          taxPrice,
+          shippingPrice,
+          totalPrice,
+          // isPaid,
+          isDelivered: false,
+        }),
+      });
+
+      if (response.ok) {
+        // router.push("/");
+      }
+    } catch (error) {
+      console.log(error,'hello');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className=" container grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-4">
       <div className=" col-span-4">
@@ -42,13 +103,21 @@ const CheckOutPage = () => {
           </Accordion>
         </div>
         <h1 className=" text-2xl font-semibold my-3">Billing Address</h1>
-        <BillingAddressForm />
+        <BillingAddressForm
+          formData={formData}
+          setFormData={setFormData}
+          submitting={submitting}
+          handleSubmit={handleSubmit}
+        />
       </div>
       <div className=" col-span-3">
         <div className="flex flex-col">
           {cartItems.map(({ _id, image, name, price, quantity }) => {
             return (
-              <div  className=" mt-4 flex items-center justify-between" key={_id}>
+              <div
+                className=" mt-4 flex items-center justify-between"
+                key={_id}
+              >
                 <div className=" flex max-w-14 h-full">
                   <Image
                     style={{

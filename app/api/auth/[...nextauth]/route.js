@@ -12,11 +12,19 @@ const authOptions = {
         })
     ],
     callbacks: {
+        async session({ session }) {
+            // store the user id from MongoDB to session
+            const sessionUser = await User.findOne({ email: session.user.email });
+            session.user.id = sessionUser._id.toString();
+      
+            return session;
+          },
         async signIn({ user, account }) {
             if (account.provider === 'google') {
                 const { name, email } = user
                 await connectDB()
                 const userExist = await User.findOne({ email })
+
                 if (!userExist) {
                     try {
                         const res = await fetch('http://localhost:3000/api/user', {
@@ -36,7 +44,11 @@ const authOptions = {
 
             }
             return user
-        }
+        },
+        // async session({ session, token, user }) {
+        //     session.user._id = 111;
+        //     return session;
+        //   },
     }
 }
 const handler = NextAuth(authOptions)
