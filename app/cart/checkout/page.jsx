@@ -11,9 +11,11 @@ import Image from "next/image";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const CheckOutPage = () => {
   const { data: session } = useSession();
+  const router = useRouter();
   const { cartItems, itemsPrice, taxPrice, shippingPrice, totalPrice } =
     useSelector((state) => state.cart);
 
@@ -36,11 +38,11 @@ const CheckOutPage = () => {
     phone: 959,
     screenshot: "",
   });
+  // console.log(formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    console.log('handleSubmit');
 
     try {
       const response = await fetch("/api/orders/new", {
@@ -49,9 +51,11 @@ const CheckOutPage = () => {
           user: session?.user.id,
           firstName: formData.firstName,
           lastName: formData.lastName,
+          phone:formData.phone,
           orderItems: orderItems,
           shippingAddress: {
             address: formData.address,
+            apartment:formData.apartment,
             postalCode: formData.postalCode,
             city: formData.city,
           },
@@ -67,10 +71,10 @@ const CheckOutPage = () => {
       });
 
       if (response.ok) {
-        // router.push("/");
+        router.push("/");
       }
     } catch (error) {
-      console.log(error,'hello');
+      console.log(error, "error");
     } finally {
       setIsSubmitting(false);
     }

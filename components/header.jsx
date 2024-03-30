@@ -30,7 +30,6 @@ function Header() {
   const side = "left";
 
   const { cartItems } = useSelector((state) => state.cart);
- 
 
   return (
     <header className="container bg-white py-4 px-6 flex items-center justify-between border-b border-gray-200 sm:flex-row max-lg:px-4">
@@ -133,9 +132,11 @@ function Header() {
                     )}
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Button variant={"ghost"} size={"sm"}>
-                      <span>Orders</span>
-                    </Button>
+                    <Link href="/admin-orders">
+                      <Button variant={"ghost"} size={"sm"}>
+                        <span>Orders</span>
+                      </Button>
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     <Button variant={"ghost"} size={"sm"}>
@@ -187,9 +188,11 @@ function Header() {
                   )}
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Button variant={"ghost"} size={"sm"}>
-                    <span>Orders</span>
-                  </Button>
+                  <Link href="admin-products">
+                    <Button variant={"ghost"} size={"sm"}>
+                      <span>Orders</span>
+                    </Button>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Button variant={"ghost"} size={"sm"}>

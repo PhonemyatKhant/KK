@@ -23,7 +23,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-export function DataTable({ columns, data }) {
+
+export function DataTable({ columns, data, type }) {
   const [sorting, setSorting] = useState([]);
   const [columnFilters, setColumnFilters] = useState([]);
   const table = useReactTable({
@@ -44,14 +45,25 @@ export function DataTable({ columns, data }) {
   return (
     <div>
       <div className="flex items-center  pb-4">
-        <Input
-          placeholder="Filter products..."
-          value={table.getColumn("name")?.getFilterValue() ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-        />
+        {type !== "order" ? (
+          <Input
+            placeholder="Filter products..."
+            value={table.getColumn("name")?.getFilterValue() ?? ""}
+            onChange={(event) =>
+              table.getColumn("name")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        ) : (
+          <Input
+            placeholder="Filter orders..."
+            value={table.getColumn("city")?.getFilterValue() ?? ""}
+            onChange={(event) =>
+              table.getColumn("city")?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+          />
+        )}
       </div>
       <div className="rounded-md border">
         <Table>

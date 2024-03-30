@@ -2,10 +2,11 @@ import Order from "@/models/orderModel";
 import { connectDB } from "@/utils/db";
 
 export const POST = async (request) => {
-    console.log(request);
+    console.log(request,'request');
     const { user,
         firstName,
         lastName,
+        phone,
         orderItems,
         shippingAddress,
         paymentMethod,
@@ -23,6 +24,7 @@ export const POST = async (request) => {
             user,
             firstName,
             lastName,
+            phone,
             orderItems,
             shippingAddress,
             paymentMethod,

@@ -42,7 +42,7 @@ const BillingAddressForm = ({
     // console.log(formData);
   };
   const setFileToBase = (file) => {
-    console.log(file);
+    // console.log(file);
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
