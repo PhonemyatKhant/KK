@@ -1,6 +1,19 @@
 import { connectDB } from "@/utils/db";
 import Order from "@/models/orderModel";
 
+
+export async function GET(
+    request,
+    { params }
+) {
+    console.log(params.orderId,'hello');
+    await connectDB(); // Connect to MongoDB
+    const order = await Order.findById(params.orderId)
+
+    if (!order) return new Response('order not found', { status: 404 })
+
+    return Response.json(order);
+}
 export async function PATCH(
     request,
     { params }
