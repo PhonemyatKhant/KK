@@ -108,7 +108,7 @@ export const columns = [
             const order = row.original
 
             return (
-                <TableDropDown id={order._id} isPaid={order.isPaid} isDelivered={order.isDelivered} />
+                <TableDropDown id={order._id} isPaid={order.isPaid} isDelivered={order.isDelivered} order={order} />
 
             )
         },

@@ -16,9 +16,13 @@ import {
   updateDeliveryHandler,
   viewOrderStatus,
 } from "@/utils/updateOrder";
+import { useSession } from "next-auth/react";
 
-const TableDropDown = ({ id, isPaid, isDelivered }) => {
+const TableDropDown = ({ id, isPaid, isDelivered ,order}) => {
   const router = useRouter();
+
+  const { data: session } = useSession();
+  
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -30,7 +34,9 @@ const TableDropDown = ({ id, isPaid, isDelivered }) => {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => viewOrderStatus(id, router)}>
+        <DropdownMenuItem
+          onClick={() => viewOrderStatus(id, router, session.user.id,order)}
+        >
           View Order Status
         </DropdownMenuItem>
         <DropdownMenuItem

@@ -1,5 +1,5 @@
-export const viewOrderStatus = (orderId, router) => {
-    router.push(`/orders/${orderId}`)
+export const viewOrderStatus = (orderId, router,userId) => {
+    router.push(`/user/${userId}/orders/${orderId}`)
 }
 
 export const updatePaymentHandler = async (orderId, isPaid, router) => {
