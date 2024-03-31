@@ -19,6 +19,8 @@ import { logging } from "@/next.config";
 import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
 import { ToastAction } from "@radix-ui/react-toast";
+import RateAndReview from "@/components/RateAndReview";
+import AllReviews from "@/components/AllReviews";
 
 const ProductDetailsPage = ({ params }) => {
   const router = useRouter();
@@ -58,9 +60,7 @@ const ProductDetailsPage = ({ params }) => {
       action: (
         <Link href="/cart">
           {" "}
-          <ToastAction altText="Go To Cart">
-            Go To Cart{" "}
-          </ToastAction>
+          <ToastAction altText="Go To Cart">Go To Cart </ToastAction>
         </Link>
       ),
     });
@@ -140,6 +140,10 @@ const ProductDetailsPage = ({ params }) => {
             </Button>
             <p className="text-gray-500">{product?.description}</p>
           </div>
+        </div>
+        <div className="flex flex-wrap justify-between container items-start">
+          <AllReviews reviews={product.reviews} />
+          <RateAndReview productId={pId} />
         </div>
       </>
     );
