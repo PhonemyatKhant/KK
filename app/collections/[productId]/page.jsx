@@ -21,6 +21,7 @@ import Link from "next/link";
 import { ToastAction } from "@radix-ui/react-toast";
 import RateAndReview from "@/components/RateAndReview";
 import AllReviews from "@/components/AllReviews";
+import Rating from "@/components/Rating";
 
 const ProductDetailsPage = ({ params }) => {
   const router = useRouter();
@@ -46,6 +47,13 @@ const ProductDetailsPage = ({ params }) => {
     };
     getProduct();
   }, [pId]);
+  let overallRating
+  if (product) {
+    const reviews = product.reviews;
+    const sum = reviews.reduce((total, review) => total + review.rating, 0);
+   overallRating = sum/product.reviews.length
+  console.log(overallRating);
+  }
 
   const addToCartHandler = () => {
     const initialState = localStorage.getItem("cartItems")
@@ -85,8 +93,9 @@ const ProductDetailsPage = ({ params }) => {
               height={64}
             />
           </div>
-          <div className=" container md:w-1/2 space-y-8 flex-1">
+          <div className=" container md:w-1/2 space-y-6 flex-1">
             <h1 className="text-2xl font-bold">{product?.name}</h1>
+            <Rating value={overallRating} text={`(${product.reviews.length})`} />
             <p className="text-xl font-semibold text-gray-700 mb-2">
               K {product?.price}
             </p>
