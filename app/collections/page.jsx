@@ -2,10 +2,23 @@ import Sidebar from "@/components/Sidebar";
 import ProductCard from "@/components/productCard";
 import SearchBar from "@/components/searchbar";
 
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
+let p = 0;
+console.log(p);
 export async function getProducts() {
   const apiEndpoint = process.env.API_ENDPOINT;
+  // let p = 0;
 
-  const res = await fetch(`http://localhost:3000/api/products?${Date.now()}`);
+  const res = await fetch(`http://localhost:3000/api/products?p=${p}`);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
@@ -54,6 +67,30 @@ const page = async () => {
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
+        <Pagination className="col-span-full">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href="#" />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#?page=1">1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink
+                
+                href="#?page=2"
+              >
+                2
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext href="#" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );
