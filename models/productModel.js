@@ -33,7 +33,9 @@ const productSchema = new mongoose.Schema(
     numReviews: { type: Number, required: true, default: 0 },
     price: { type: Number, required: true, default: 0 },
     countInStock: { type: Number, required: true, default: 0 },
+    discountPercentage: { type: Number, },
     isFeaturedProduct: { type: Boolean, required: false, default: false },
+    isOnSale: { type: Boolean, default: false },
   },
   {
     timestamps: true,

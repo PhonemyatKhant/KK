@@ -17,7 +17,25 @@ function ProductCard({ product }) {
             {product.name}
           </h3>
           <p className="text-gray-700">{product.brand}</p>
-          <p className="text-sm sm:text-lg font-semibold">K{product.price}</p>
+          {product.isOnSale ? (
+            <>
+              {" "}
+              <p className=" line-through text-red-600 inline text-sm sm:text-lg font-semibold">
+                K{product.price}
+              </p>
+              <span className="text-sm sm:text-lg font-semibold">
+                {" "}
+                K {((100 - product.discountPercentage) / 100) * product.price}
+              </span>
+            </>
+          ) : (
+            <>
+              {" "}
+              <p className="  inline text-sm sm:text-lg font-semibold">
+                K{product.price}
+              </p>
+            </>
+          )}
         </div>
       </div>
     </Link>

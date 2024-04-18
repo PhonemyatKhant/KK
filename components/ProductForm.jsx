@@ -65,6 +65,17 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
               required
             />
           </div>
+          {/* discounts */}
+          <div className="grid w-full max-w-lg items-center gap-1.5">
+            <Label htmlFor="discountPercentage">Put on sale?</Label>
+            <Input
+              type="number"
+              id="discountPercentage"
+              placeholder="Discount Percentage %"
+              value={formData.discountPercentage}
+              onChange={handleChange}
+            />
+          </div>
           <div className="grid w-full max-w-lg items-center gap-1.5">
             <Label htmlFor="image">Image</Label>
             <Input id="image" type="file" onChange={handleChange} />
@@ -102,7 +113,7 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
               required
             />
           </div>
-         
+
           <div className="grid w-full max-w-lg gap-1.5">
             <Label htmlFor="description">Product Descriptioin</Label>
             <Textarea

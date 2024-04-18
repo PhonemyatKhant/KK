@@ -23,10 +23,12 @@ export async function PATCH(
         category,
         description,
         price,
+        discountPercentage,
         countInStock,
-        isFeaturedProduct
+        isFeaturedProduct,
+        isOnSale
     } = await request.json()
-    console.log(name);
+    
     try {
         await connectDB(); // Connect to MongoDB
         const existingProduct = await Product.findById(params.productId)
@@ -39,8 +41,10 @@ export async function PATCH(
         existingProduct.category = category
         existingProduct.description = description
         existingProduct.price = price
+        existingProduct.discountPercentage = discountPercentage
         existingProduct.countInStock = countInStock
         existingProduct.isFeaturedProduct = isFeaturedProduct
+        existingProduct.isOnSale = isOnSale
 
         await existingProduct.save()
         return new Response(JSON.stringify(existingProduct), { status: 200 })

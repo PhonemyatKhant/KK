@@ -1,31 +1,26 @@
+"use client";
+
+import Paginations from "@/components/Paginations";
+
 import Sidebar from "@/components/Sidebar";
 import ProductCard from "@/components/productCard";
 import SearchBar from "@/components/searchbar";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-
-let p = 0;
-console.log(p);
 export async function getProducts() {
   const apiEndpoint = process.env.API_ENDPOINT;
-  // let p = 0;
 
-  const res = await fetch(`http://localhost:3000/api/products?p=${p}`);
+  const res = await fetch(`http://localhost:3000/api/products`);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
 
   const data = await res.json();
+  const { products, page, pages } = data;
 
-  return data;
+  return products;
 }
 export const getUniqueValues = (productsArray) => {
   const categories = new Set();
@@ -52,48 +47,63 @@ export const getUniqueValues = (productsArray) => {
   return p;
 };
 
-const page = async () => {
-  const products = await getProducts();
-  const { categoryOptions, brandOptions, maxPrice } = getUniqueValues(products);
+const CollectionPage = () => {
+  const [products, setProducts] = useState([]);
+  const [pages, setPages] = useState();
+  const [sideBarValues, setSideBarValues] = useState({
+    categoryOptions: [],
+    brandOptions: [],
+    maxPrice: 0,
+  });
+  const { page } = useSelector((state) => state.pagination);
+
+  useEffect(() => {
+    console.log(page);
+    const allProducts = async () => {
+      const pageNumber = page;
+
+      const res = await fetch(
+        `http://localhost:3000/api/products?p=${pageNumber}`
+      );
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const { products, pages } = await res.json();
+
+      setProducts(products);
+      setPages(pages);
+      return products;
+    };
+    allProducts();
+  }, [page]);
+
+  useEffect(() => {
+    if (products.length !== 0) {
+      const { categoryOptions, brandOptions, maxPrice } =
+        getUniqueValues(products);
+      setSideBarValues({ categoryOptions, brandOptions, maxPrice });
+      console.log(categoryOptions);
+    }
+  }, [sideBarValues]);
   return (
     <div className="container gap-5 flex mx-auto px-4">
-      <Sidebar
-        categoryOptions={categoryOptions}
-        brandOptions={brandOptions}
-        maxPrice={maxPrice}
-      />
+      {products.length !== 0 && (
+        <Sidebar
+          categoryOptions={sideBarValues.categoryOptions}
+          brandOptions={sideBarValues.brandOptions}
+          maxPrice={sideBarValues.maxPrice}
+        />
+      )}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5">
         <SearchBar />
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
-        <Pagination className="col-span-full">
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#?page=1">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink
-                
-                href="#?page=2"
-              >
-                2
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <Paginations pages={pages} />
       </div>
     </div>
   );
 };
 
-export default page;
+export default CollectionPage;

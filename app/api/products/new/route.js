@@ -8,8 +8,10 @@ export const POST = async (request) => {
         category,
         description,
         price,
+        discountPercentage,
         countInStock,
-        isFeaturedProduct } = await request.json();
+        isFeaturedProduct,
+        isOnSale } = await request.json();
 
     try {
         await connectDB();
@@ -20,8 +22,10 @@ export const POST = async (request) => {
             category,
             description,
             price,
+            discountPercentage,
             countInStock,
-            isFeaturedProduct
+            isFeaturedProduct,
+            isOnSale
         });
 
         await newProduct.save();

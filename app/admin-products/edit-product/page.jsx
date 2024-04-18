@@ -17,9 +17,12 @@ const UpdateProduct = () => {
     category: "",
     description: "",
     price: 0,
+    discountPercentage: 0,
     countInStock: 0,
     isFeaturedProduct: false,
+    isOnSale: false,
   });
+
   const [submitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -34,11 +37,13 @@ const UpdateProduct = () => {
         category: data.category,
         description: data.description,
         price: data.price,
+        discountPercentage: data.discountPercentage,
         countInStock: data.countInStock,
         isFeaturedProduct: false,
+        isOnSale: data.isOnSale,
       });
     };
-
+    console.log(formData.isOnSale);
     if (productId) getProductDetails();
   }, [productId]);
 
@@ -51,6 +56,7 @@ const UpdateProduct = () => {
     try {
       const response = await fetch(`/api/products/${productId}`, {
         method: "PATCH",
+
         body: JSON.stringify({
           name: formData.name,
           image: formData.image,
@@ -58,8 +64,10 @@ const UpdateProduct = () => {
           category: formData.category,
           description: formData.description,
           price: formData.price,
+          discountPercentage: formData.discountPercentage,
           countInStock: formData.countInStock,
           isFeaturedProduct: formData.isFeaturedProduct,
+          isOnSale: formData.discountPercentage != 0 ? true : false,
         }),
       });
 

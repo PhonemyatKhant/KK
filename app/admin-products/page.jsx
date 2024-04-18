@@ -1,12 +1,27 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import { getProducts } from "../collections/page";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const page = async () => {
-  const products = await getProducts();
+const page = () => {
+  const [products, setProducts] = useState();
+  useEffect(() => {
+    const getAllProducts = async () => {
+      const res = await fetch(`http://localhost:3000/api/products`);
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const { products, pages } = await res.json();
+
+      setProducts(products);
+    };
+    getAllProducts();
+  }, []);
+  console.log(products);
   return (
     <>
       <div className="container flex justify-between mt-4">
@@ -16,9 +31,11 @@ const page = async () => {
         </Link>
       </div>
 
-      <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={products} />
-      </div>
+      {products && (
+        <div className="container mx-auto py-10">
+          <DataTable columns={columns} data={products} />
+        </div>
+      )}
     </>
   );
 };

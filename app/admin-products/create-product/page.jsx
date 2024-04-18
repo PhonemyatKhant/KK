@@ -20,6 +20,8 @@ const CreateProductPage = () => {
     price: 0,
     countInStock: 0,
     isFeaturedProduct: false,
+    discountPercentage: 0,
+    isOnSale:false
   });
 
   const handleSubmit = async (e) => {
@@ -37,8 +39,11 @@ const CreateProductPage = () => {
           category: formData.category,
           description: formData.description,
           price: formData.price,
+          discountPercentage: formData.discountPercentage,
+
           countInStock: formData.countInStock,
           isFeaturedProduct: formData.isFeaturedProduct,
+          isOnSale: formData.discountPercentage !== 0 ? true : false,
         }),
       });
 
