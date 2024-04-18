@@ -1,28 +1,32 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { useRouter } from "next/navigation";
 import ProductCard from "./productCard";
 
-const SearchBar = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+const SearchBar = ({ setSearchQuery, searchQuery }) => {
+  // const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
+  const searchInputRef = useRef(null);
 
   const handleSearch = (e) => {
     e.preventDefault();
-   
-    router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
+    router.push(`/search?query=${encodeURIComponent(searchInputRef.current.value)}&p=1`);
+    setSearchQuery(searchInputRef.current.value)
+    
   };
 
   return (
     <>
-      <form className=" col-span-full max-w-md" onSubmit={handleSearch}>
+      <form
+        className=" col-span-full max-w-md"
+        onSubmit={(e) => handleSearch(e)}
+      >
         <Input
           type="text"
           placeholder="Search products..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          ref={searchInputRef}
         />
       </form>
     </>

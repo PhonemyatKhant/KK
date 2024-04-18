@@ -47,9 +47,10 @@ export const getUniqueValues = (productsArray) => {
   return p;
 };
 
-const CollectionPage = () => {
+const CollectionPage = ({searchParams}) => {
   const [products, setProducts] = useState([]);
   const [pages, setPages] = useState();
+  const [searchQuery, setSearchQuery] = useState(searchParams.query || "");
   const [sideBarValues, setSideBarValues] = useState({
     categoryOptions: [],
     brandOptions: [],
@@ -96,7 +97,7 @@ const CollectionPage = () => {
         />
       )}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5">
-        <SearchBar />
+        <SearchBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
         {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
