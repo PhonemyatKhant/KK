@@ -47,7 +47,7 @@ export const getUniqueValues = (productsArray) => {
   return p;
 };
 
-const CollectionPage = ({searchParams}) => {
+const CollectionPage = ({ searchParams }) => {
   const [products, setProducts] = useState([]);
   const [pages, setPages] = useState();
   const [searchQuery, setSearchQuery] = useState(searchParams.query || "");
@@ -59,7 +59,6 @@ const CollectionPage = ({searchParams}) => {
   const { page } = useSelector((state) => state.pagination);
 
   useEffect(() => {
-    console.log(page);
     const allProducts = async () => {
       const pageNumber = page;
 
@@ -73,20 +72,20 @@ const CollectionPage = ({searchParams}) => {
       const { products, pages } = await res.json();
 
       setProducts(products);
+      //get buttons
+      if (products.length !== 0) {
+        const { categoryOptions, brandOptions, maxPrice } =
+          getUniqueValues(products);
+        setSideBarValues({ categoryOptions, brandOptions, maxPrice });
+        console.log(maxPrice);
+      }
+
       setPages(pages);
       return products;
     };
     allProducts();
   }, [page]);
 
-  useEffect(() => {
-    if (products.length !== 0) {
-      const { categoryOptions, brandOptions, maxPrice } =
-        getUniqueValues(products);
-      setSideBarValues({ categoryOptions, brandOptions, maxPrice });
-      console.log(categoryOptions);
-    }
-  }, [sideBarValues]);
   return (
     <div className="container gap-5 flex mx-auto px-4">
       {products.length !== 0 && (

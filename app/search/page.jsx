@@ -14,7 +14,11 @@ const SearchPage = ({ searchParams }) => {
 
   const [pages, setPages] = useState(1);
 
-  // const [sidebarData, setSidebarData] = useState(null);
+  const [sideBarValues, setSideBarValues] = useState({
+    categoryOptions: [],
+    brandOptions: [],
+    maxPrice: 0,
+  });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -30,10 +34,16 @@ const SearchPage = ({ searchParams }) => {
       }
 
       const { products, pages } = await res.json();
-      console.log("fetched");
-      console.log(products);
 
       setAllProducts(products);
+      //get buttons
+      if (products.length !== 0) {
+        const { categoryOptions, brandOptions, maxPrice } =
+          getUniqueValues(products);
+        setSideBarValues({ categoryOptions, brandOptions, maxPrice });
+        console.log(maxPrice);
+      }
+
       setPages(pages);
       setIsLoading(false);
 
@@ -74,14 +84,14 @@ const SearchPage = ({ searchParams }) => {
         <p>Loading...</p>
       ) : (
         <>
-          {/* {sidebarData && (
+          {allProducts.length !== 0 && (
             <Sidebar
-              categoryOptions={sidebarData.categoryOptions}
-              brandOptions={sidebarData.brandOptions}
-              maxPrice={sidebarData.maxPrice}
-              sidebarData={sidebarData}
+              categoryOptions={sideBarValues.categoryOptions}
+              brandOptions={sideBarValues.brandOptions}
+              maxPrice={sideBarValues.maxPrice}
+              sidebarData={sideBarValues}
             />
-          )} */}
+          )}
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5">
             <SearchBar
               setSearchQuery={setSearchQuery}

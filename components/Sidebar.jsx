@@ -75,7 +75,7 @@ const Sidebar = ({
                 id="maxlength"
                 onValueChange={setValue}
                 defaultValue={[maxPrice]}
-                max={value}
+                max={maxPrice}
                 step={500}
               />
             </div>
