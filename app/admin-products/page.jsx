@@ -10,12 +10,14 @@ const page = () => {
   const [products, setProducts] = useState();
   useEffect(() => {
     const getAllProducts = async () => {
-      const res = await fetch(`http://localhost:3000/api/products`);
+      const res = await fetch(
+        `http://localhost:3000/api/products/admin-products`
+      );
       if (!res.ok) {
         throw new Error("Failed to fetch data");
       }
 
-      const { products, pages } = await res.json();
+      const products = await res.json();
 
       setProducts(products);
     };

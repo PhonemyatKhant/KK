@@ -47,12 +47,12 @@ const ProductDetailsPage = ({ params }) => {
     };
     getProduct();
   }, [pId]);
-  let overallRating
+  let overallRating;
   if (product) {
     const reviews = product.reviews;
     const sum = reviews.reduce((total, review) => total + review.rating, 0);
-   overallRating = sum/product.reviews.length
-  console.log(overallRating);
+    overallRating = sum / product.reviews.length;
+    console.log(overallRating);
   }
 
   const addToCartHandler = () => {
@@ -95,10 +95,32 @@ const ProductDetailsPage = ({ params }) => {
           </div>
           <div className=" container md:w-1/2 space-y-6 flex-1">
             <h1 className="text-2xl font-bold">{product?.name}</h1>
-            <Rating value={overallRating} text={`(${product.reviews.length})`} />
-            <p className="text-xl font-semibold text-gray-700 mb-2">
-              K {product?.price}
-            </p>
+            <Rating
+              value={overallRating}
+              text={`(${product.reviews.length})`}
+            />
+            {product.isOnSale ? (
+              <>
+                {" "}
+                <p className=" line-through text-red-600 inline text-sm sm:text-lg font-semibold">
+                  K{product.price}
+                </p>
+                <span className="text-sm sm:text-lg font-semibold">
+                  {" "}
+                  K{((100 - product.discountPercentage) / 100) * product.price}
+                </span>
+              </>
+            ) : (
+              <>
+                {" "}
+                <p className="  inline text-xl font-semibold text-gray-700 mb-2">
+                  K{product.price}
+                </p>
+              </>
+            )}
+            {/* <p className="text-xl font-semibold text-gray-700 mb-2">
+              K {product?.price} <span> </span>
+            </p> */}
             <p className="text-gray-500">
               Status: {product?.countInStock ? "In Stock" : "Out of Stock"}
             </p>

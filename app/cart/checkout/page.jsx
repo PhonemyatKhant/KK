@@ -51,11 +51,11 @@ const CheckOutPage = () => {
           user: session?.user.id,
           firstName: formData.firstName,
           lastName: formData.lastName,
-          phone:formData.phone,
+          phone: formData.phone,
           orderItems: orderItems,
           shippingAddress: {
             address: formData.address,
-            apartment:formData.apartment,
+            apartment: formData.apartment,
             postalCode: formData.postalCode,
             city: formData.city,
           },
@@ -116,33 +116,40 @@ const CheckOutPage = () => {
       </div>
       <div className=" col-span-3">
         <div className="flex flex-col">
-          {cartItems.map(({ _id, image, name, price, quantity }) => {
-            return (
-              <div
-                className=" mt-4 flex items-center justify-between"
-                key={_id}
-              >
-                <div className=" flex max-w-14 h-full">
-                  <Image
-                    style={{
-                      width: "auto",
-                      height: "5rem",
-                      borderRadius: "10%",
-                      objectFit: "cover",
-                    }}
-                    src={image}
-                    alt={name}
-                    width={48}
-                    height={48}
-                  />
+          {cartItems.map(
+            ({ _id, image, name, price, quantity, discountPercentage }) => {
+              return (
+                <div
+                  className=" mt-4 flex items-center justify-between"
+                  key={_id}
+                >
+                  <div className=" flex max-w-14 h-full">
+                    <Image
+                      style={{
+                        width: "auto",
+                        height: "5rem",
+                        borderRadius: "10%",
+                        objectFit: "cover",
+                      }}
+                      src={image}
+                      alt={name}
+                      width={48}
+                      height={48}
+                    />
+                  </div>
+                  <p className=" text-left pt-2 text-sm">{name}</p>
+                  <p className=" pt-2 text-sm">
+                    {`${
+                      ((100 - discountPercentage) / 100) * price
+                    } x ${quantity} = ${
+                      ((100 - discountPercentage) / 100) * price * quantity
+                    }`}{" "}
+                    K{" "}
+                  </p>
                 </div>
-                <p className=" text-left pt-2 text-sm">{name} K </p>
-                <p className=" pt-2 text-sm">
-                  {`${price} x ${quantity} = ${price * quantity}`} K{" "}
-                </p>
-              </div>
-            );
-          })}
+              );
+            }
+          )}
           <div className="mt-4 flex justify-between items-center">
             <p className=" text-left pt-2 text-lg font-semibold">Items Price</p>
             <p className=" text-left pt-2 text-lg font-semibold">

@@ -32,6 +32,7 @@ const CartPage = () => {
     dispatch(removeFromCart(id));
   }
   const { cartItems, itemsPrice } = useSelector((state) => state.cart);
+  console.log(cartItems);
   return (
     <div className="container mt-7 lg:px-32 ">
       <h1 className=" text-2xl mb-6">Shopping Cart</h1>
@@ -65,7 +66,7 @@ const CartPage = () => {
                 </div>
 
                 {/* <p className=" max-w-20 flex-wrap text-sm ">{item.brand}</p> */}
-                <p className=" pt-2 text-sm">{item.price} K </p>
+                <p className=" pt-2 text-sm">{(((100 - item.discountPercentage) / 100) * item.price)*item.quantity} K </p>
                 <div className=" mx-5 w-[70px]">
                   {" "}
                   <Select

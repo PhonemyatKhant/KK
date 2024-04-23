@@ -15,6 +15,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { getProducts } from "../collections/page";
+import { Badge } from "@/components/ui/badge";
 
 
 
@@ -40,6 +41,17 @@ export const columns = [
     {
         accessorKey: "price",
         header: "Price",
+    },
+    {
+        accessorKey: "discountPercentage",
+        header: "On Sale",
+        cell: ({ row }) => {
+            const percentage = row.getValue('discountPercentage')
+
+            return (
+                percentage !== undefined ? <Badge>{`${percentage} %`}</Badge> : <Badge variant={'destructive'}>false</Badge>
+            )
+        }
     },
     {
         accessorKey: "category",
@@ -75,6 +87,7 @@ export const columns = [
             // console.log(row.getValue('_id'));
 
             const product = row.original
+            // console.log(product);
             const router = useRouter()
             const handleEdit = (product) => {
 

@@ -118,9 +118,11 @@ function Header() {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
+                  <Link href="/profile">
                     <Button variant={"ghost"} size={"sm"}>
                       <span>Profile</span>
                     </Button>
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
                     {session?.user?.email === "phonemyatkhant46@gmail.com" && (
@@ -174,9 +176,11 @@ function Header() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
+                <Link href="/profile">
                   <Button variant={"ghost"} size={"sm"}>
                     <span>Profile</span>
                   </Button>
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   {session?.user?.email === "phonemyatkhant46@gmail.com" && (
