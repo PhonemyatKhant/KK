@@ -52,7 +52,7 @@ const ProductDetailsPage = ({ params }) => {
     const reviews = product.reviews;
     const sum = reviews.reduce((total, review) => total + review.rating, 0);
     overallRating = sum / product.reviews.length;
-    console.log(overallRating);
+    // console.log(overallRating);
   }
 
   const addToCartHandler = () => {

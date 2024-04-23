@@ -12,8 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import {
-  updatePaymentHandler,
-  updateDeliveryHandler,
+  
   viewOrderStatus,
 } from "@/utils/updateOrder";
 import { useSession } from "next-auth/react";
@@ -39,16 +38,7 @@ const TableDropDown = ({ id, isPaid, isDelivered ,order}) => {
         >
           View Order Status
         </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => updatePaymentHandler(id, isPaid, router)}
-        >
-          Update Payment Status
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          onClick={() => updateDeliveryHandler(id, isDelivered, router)}
-        >
-          Update Delivery Status
-        </DropdownMenuItem>
+        
       </DropdownMenuContent>
     </DropdownMenu>
   );

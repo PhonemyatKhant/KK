@@ -14,6 +14,7 @@ const Sidebar = ({
   maxPrice,
   sidebarData,
   isLoading,
+  filterQuery
 }) => {
   const [data, setData] = useState(sidebarData);
   const [value, setValue] = useState(maxPrice);

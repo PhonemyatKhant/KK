@@ -9,11 +9,31 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useSession } from "next-auth/react";
-import { DataTable } from "../admin-products/data-table";
+import { DataTable } from "../../admin-products/data-table";
 import { data } from "autoprefixer";
+import { useEffect, useState } from "react";
+import { columns } from "./columns";
 
-const ProfilePage = () => {
+const ProfilePage = ({params}) => {
+  const [orders,setOrders] = useState([])
+  const userId = params.userId
   const { data: session } = useSession();
+  useEffect(() => {
+    const getCustomerOrders = async () => {
+      try {
+        const res = await fetch(`http://localhost:3000/api/orders/profile/${userId}`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch customer order");
+        }
+        const customerOrders = await res.json();
+        setOrders(customerOrders);
+      } catch (error) {
+        console.error(error);
+        // Handle error redirect
+      }
+    };
+    getCustomerOrders();
+  }, [userId]);
   return (
     <>
       <div className="container mt-4">
@@ -37,8 +57,8 @@ const ProfilePage = () => {
             </CardContent>
           </Card>
         </div>
-        <div className="container mx-auto py-10">
-        <DataTable columns={columns} data={data}  type="order" />
+        <div className=" mx-auto py-10">
+        <DataTable columns={columns} data={orders}  type="order" />
       </div>
       </div>
       <div className="container mx-auto py-10"></div>

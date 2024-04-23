@@ -7,12 +7,28 @@ import ProductCard from "@/components/productCard";
 import { useSearchParams } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import Paginations from "@/components/Paginations";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const SearchPage = ({ searchParams }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState(searchParams.query);
+  const [filterQuery, setFilterQuery] = useState({
+    viewOutOfStock: false,
+    brand: "",
+    category: "",
+    price: 0,
+  });
 
   const [pages, setPages] = useState(1);
+  const [pageNumber, setPageNumber] = useState(1);
 
   const [sideBarValues, setSideBarValues] = useState({
     categoryOptions: [],
@@ -24,10 +40,9 @@ const SearchPage = ({ searchParams }) => {
   useEffect(() => {
     setSearchQuery(searchParams.query);
     const allProducts = async () => {
-      const pageNumber = 1;
-
+     
       const res = await fetch(
-        `http://localhost:3000/api/products/search?query=${searchParams.query}&p=${pageNumber}`
+        `http://localhost:3000/api/products/search?query=${searchParams.query}&p=${pageNumber}&viewOOS=${filterQuery.viewOutOfStock}`
       );
       if (!res.ok) {
         throw new Error("Failed to fetch searched product");
@@ -41,7 +56,7 @@ const SearchPage = ({ searchParams }) => {
         const { categoryOptions, brandOptions, maxPrice } =
           getUniqueValues(products);
         setSideBarValues({ categoryOptions, brandOptions, maxPrice });
-        console.log(maxPrice);
+       
       }
 
       setPages(pages);
@@ -50,7 +65,7 @@ const SearchPage = ({ searchParams }) => {
       return products;
     };
     allProducts();
-  }, [searchParams.query]);
+  }, [searchParams.query, pageNumber,filterQuery]);
 
   // Move sidebar data handling outside of useEffect
   // useEffect(() => {
@@ -90,6 +105,7 @@ const SearchPage = ({ searchParams }) => {
               brandOptions={sideBarValues.brandOptions}
               maxPrice={sideBarValues.maxPrice}
               sidebarData={sideBarValues}
+              filterQuery={filterQuery}
             />
           )}
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5">
@@ -109,7 +125,34 @@ const SearchPage = ({ searchParams }) => {
             ) : (
               <p>No results found for your search.</p>
             )}
-            <Paginations pages={pages} />
+            {/* <Paginations pages={pages} /> */}
+            <Pagination className="col-span-full">
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() => setPageNumber((prev) => (prev -= 1))}
+                  />
+                </PaginationItem>
+                <PaginationItem>
+                  {Array.from({ length: pages }).map((_, index) => (
+                    <PaginationLink
+                      key={index}
+                      onClick={() => setPageNumber(index + 1)}
+                    >
+                      {index + 1}
+                    </PaginationLink>
+                  ))}
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() => setPageNumber((prev) => (prev += 1))}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
           </div>
         </>
       )}

@@ -12,21 +12,39 @@ export async function GET(req) {
         return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     }
 
-    const userInput = req.nextUrl.searchParams.get('query') || "" // Example user input
+    const userInput = req.nextUrl.searchParams.get('query') || ""
+    const toggleState = req.nextUrl.searchParams.get('viewOOS') || false
+   
     const escapedUserInput = escapeRegExp(userInput);
     const regexPattern = new RegExp(`${escapedUserInput.trim()}`, 'i');
 
     try {
         await connectDB(); // Connect to MongoDB
 
-        const products = await Product.find({
-            $or: [
-                { name: { $regex: regexPattern } },
-                { brand: { $regex: regexPattern } },
-                { category: { $regex: regexPattern } }
+        const query = {
+            $and: [
+                {
+                    $or: [
+                        { name: { $regex: regexPattern } },
+                        { brand: { $regex: regexPattern } },
+                        { category: { $regex: regexPattern } }
+                    ]
+                },
+                { category: { $regex: "" } },
+                { brand: { $regex: "" } },
+                { price: { $lte: 10000 } },
+
             ]
-        }).skip((page - 1) * productsPerPage).limit(productsPerPage)
-        const count = products.length
+        }
+        // Check if the toggle is ON
+        const viewOutOfStock = toggleState === 'true'
+       
+        if (viewOutOfStock === false) {
+            query["$and"].push({ "countInStock": { "$not": { "$eq": 0 } } });
+        }
+        const products = await Product.find(query).skip((page - 1) * productsPerPage).limit(productsPerPage)
+        const count = await Product.find(query).countDocuments()
+        console.log(Math.ceil(count / productsPerPage));
         return new Response(JSON.stringify({ products, page, pages: Math.ceil(count / productsPerPage) }), {
             status: 200,
             headers: {

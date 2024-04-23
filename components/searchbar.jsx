@@ -12,7 +12,7 @@ const SearchBar = ({ setSearchQuery, searchQuery }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    router.push(`/search?query=${encodeURIComponent(searchInputRef.current.value)}&p=1`);
+    router.push(`/search?query=${encodeURIComponent(searchInputRef.current.value)}`);
     setSearchQuery(searchInputRef.current.value)
     
   };

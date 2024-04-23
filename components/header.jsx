@@ -118,10 +118,10 @@ function Header() {
                   <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
-                  <Link href="/profile">
-                    <Button variant={"ghost"} size={"sm"}>
-                      <span>Profile</span>
-                    </Button>
+                    <Link href={`/profile/${session.user.id}`}>
+                      <Button variant={"ghost"} size={"sm"}>
+                        <span>Profile</span>
+                      </Button>
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
@@ -176,10 +176,10 @@ function Header() {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                <Link href="/profile">
-                  <Button variant={"ghost"} size={"sm"}>
-                    <span>Profile</span>
-                  </Button>
+                  <Link href={`/profile/${session.user.id}`}>
+                    <Button variant={"ghost"} size={"sm"}>
+                      <span>Profile</span>
+                    </Button>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
