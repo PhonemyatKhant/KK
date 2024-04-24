@@ -25,7 +25,7 @@ function ProductCard({ product }) {
               </p>
               <span className="text-sm sm:text-lg font-semibold">
                 {" "}
-                K {((100 - product.discountPercentage) / 100) * product.price}
+                K{((100 - product.discountPercentage) / 100) * product.price}
               </span>
             </>
           ) : (

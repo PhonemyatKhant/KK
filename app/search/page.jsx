@@ -16,17 +16,16 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useSelector } from "react-redux";
 
 const SearchPage = ({ searchParams }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState(searchParams.query);
-  const [filterQuery, setFilterQuery] = useState({
-    viewOutOfStock: false,
-    brand: "",
-    category: "",
-    price: 0,
-  });
 
+  const { viewOutOfStock, brand, category } = useSelector(
+    (state) => state.filter
+  );
+  // console.log(brand, category);
   const [pages, setPages] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
 
@@ -40,9 +39,8 @@ const SearchPage = ({ searchParams }) => {
   useEffect(() => {
     setSearchQuery(searchParams.query);
     const allProducts = async () => {
-     
       const res = await fetch(
-        `http://localhost:3000/api/products/search?query=${searchParams.query}&p=${pageNumber}&viewOOS=${filterQuery.viewOutOfStock}`
+        `http://localhost:3000/api/products/search?query=${searchParams.query}&p=${pageNumber}&viewOOS=${viewOutOfStock}&brand=${brand}&category=${category}`
       );
       if (!res.ok) {
         throw new Error("Failed to fetch searched product");
@@ -56,7 +54,6 @@ const SearchPage = ({ searchParams }) => {
         const { categoryOptions, brandOptions, maxPrice } =
           getUniqueValues(products);
         setSideBarValues({ categoryOptions, brandOptions, maxPrice });
-       
       }
 
       setPages(pages);
@@ -65,33 +62,7 @@ const SearchPage = ({ searchParams }) => {
       return products;
     };
     allProducts();
-  }, [searchParams.query, pageNumber,filterQuery]);
-
-  // Move sidebar data handling outside of useEffect
-  // useEffect(() => {
-  //   if (allProducts.length > 0) {
-  //     const { categoryOptions, brandOptions, maxPrice } =
-  //       getUniqueValues(searchedResults);
-  //     setSidebarData({ categoryOptions, brandOptions, maxPrice });
-  //   }
-  // }, [allProducts]);
-  // console.log(sidebarData);
-  // const filterProducts = (searchtext) => {
-  //   if (!searchtext || searchtext.trim() === "") return [];
-
-  //   const regex = new RegExp(searchtext, "i");
-
-  //   const fProducts = allProducts.filter(
-  //     (product) =>
-  //       regex.test(product.name) ||
-  //       regex.test(product.brand) ||
-  //       regex.test(product.category)
-  //   );
-
-  //   return fProducts;
-  // };
-
-  // const searchedResults = filterProducts(searchQuery);
+  }, [searchParams.query, pageNumber, viewOutOfStock, brand, category]);
 
   return (
     <div className="container gap-5 flex mx-auto px-4">
@@ -105,7 +76,6 @@ const SearchPage = ({ searchParams }) => {
               brandOptions={sideBarValues.brandOptions}
               maxPrice={sideBarValues.maxPrice}
               sidebarData={sideBarValues}
-              filterQuery={filterQuery}
             />
           )}
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5">

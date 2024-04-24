@@ -7,7 +7,8 @@ import ProductCard from "@/components/productCard";
 import SearchBar from "@/components/searchbar";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { resetFilter } from "../redux/slices/filterSlice";
 
 export async function getProducts() {
   const apiEndpoint = process.env.API_ENDPOINT;
@@ -56,7 +57,20 @@ const CollectionPage = ({ searchParams }) => {
     brandOptions: [],
     maxPrice: 0,
   });
+  const [filterQuery, setFilterQuery] = useState({
+    viewOutOfStock: false,
+    brand: "",
+    category: "",
+    price: 0,
+  });
   const { page } = useSelector((state) => state.pagination);
+  // const dispatch = useDispatch()
+
+  // const resetFilterHandler = async () => {
+  //   dispatch(resetFilter());
+  // };
+
+  // resetFilterHandler();
 
   useEffect(() => {
     const allProducts = async () => {
@@ -77,7 +91,7 @@ const CollectionPage = ({ searchParams }) => {
         const { categoryOptions, brandOptions, maxPrice } =
           getUniqueValues(products);
         setSideBarValues({ categoryOptions, brandOptions, maxPrice });
-        console.log(maxPrice);
+        // console.log(maxPrice);
       }
 
       setPages(pages);
@@ -93,6 +107,8 @@ const CollectionPage = ({ searchParams }) => {
           categoryOptions={sideBarValues.categoryOptions}
           brandOptions={sideBarValues.brandOptions}
           maxPrice={sideBarValues.maxPrice}
+          filterQuery={filterQuery}
+          setFilterQuery={setFilterQuery}
         />
       )}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5">

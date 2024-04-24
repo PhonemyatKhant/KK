@@ -7,7 +7,7 @@ import { Badge } from "./ui/badge";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Menu } from "lucide-react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,10 +24,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { resetFilter } from "@/app/redux/slices/filterSlice";
 
 function Header() {
   const { status, data: session } = useSession();
   const side = "left";
+  const dispatch = useDispatch();
+
+  const resetFilterHandler = async () => {
+    dispatch(resetFilter());
+  };
 
   const { cartItems } = useSelector((state) => state.cart);
 
@@ -62,7 +68,11 @@ function Header() {
                     </Button>
                   </Link>
                   <Link href="/collections">
-                    <Button variant={"ghost"} size={"sm"}>
+                    <Button
+                      onClick={resetFilterHandler}
+                      variant={"ghost"}
+                      size={"sm"}
+                    >
                       Collections
                     </Button>
                   </Link>
@@ -82,7 +92,7 @@ function Header() {
       </Link>
       <nav className="hidden md:flex items-center">
         <Link href="/collections">
-          <Button variant={"ghost"} size={"sm"}>
+          <Button onClick={resetFilterHandler} variant={"ghost"} size={"sm"}>
             Collections
           </Button>
         </Link>

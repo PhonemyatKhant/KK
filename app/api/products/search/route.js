@@ -13,10 +13,19 @@ export async function GET(req) {
     }
 
     const userInput = req.nextUrl.searchParams.get('query') || ""
+    const brand = req.nextUrl.searchParams.get('brand') || ""
+    const category = req.nextUrl.searchParams.get('category') || ""
     const toggleState = req.nextUrl.searchParams.get('viewOOS') || false
-   
+
+    console.log(brand, category);
+
     const escapedUserInput = escapeRegExp(userInput);
+    const escapedBrandInput = escapeRegExp(brand);
+    const escapedCategoryInput = escapeRegExp(category);
+
     const regexPattern = new RegExp(`${escapedUserInput.trim()}`, 'i');
+    const regexPatternBrand = new RegExp(`${escapedBrandInput.trim()}`, 'i');
+    const regexPatternCategory = new RegExp(`${escapedCategoryInput.trim()}`, 'i');
 
     try {
         await connectDB(); // Connect to MongoDB
@@ -30,15 +39,15 @@ export async function GET(req) {
                         { category: { $regex: regexPattern } }
                     ]
                 },
-                { category: { $regex: "" } },
-                { brand: { $regex: "" } },
+                { category: { $regex: regexPatternCategory } },
+                { brand: { $regex: regexPatternBrand } },
                 { price: { $lte: 10000 } },
 
             ]
         }
         // Check if the toggle is ON
         const viewOutOfStock = toggleState === 'true'
-       
+
         if (viewOutOfStock === false) {
             query["$and"].push({ "countInStock": { "$not": { "$eq": 0 } } });
         }
