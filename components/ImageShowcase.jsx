@@ -6,7 +6,7 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 const ImageShowcase = ({ product, title, message }) => {
-  console.log(product);
+  // console.log(product);
   return (
     <div>
       <h1 className=" text-3xl  my-3">{title} </h1>

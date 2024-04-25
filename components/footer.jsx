@@ -5,8 +5,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
- 
-    <footer className="flex justify-evenly items-start text-white  mt-6 bg-black py-8">
+    <footer className="  grid grid-cols-1 text-white sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 bg-black  items-start gap-6 p-6 ">
       <div>
         <h1 className=" text-white text-4xl">
           Find your
@@ -38,9 +37,9 @@ const Footer = () => {
           <h1 className="underline">Contact Us</h1>{" "}
         </Link>
       </div>
-      <div>
+      <div >
         <h1 className="text-lg">Follow Us</h1>
-        <div className="my-5 flex justify-between items-center">
+        <div className="my-5 flex justify-between items-center max-w-[100px]">
           <Link href="">
             <FaFacebook />
           </Link>
