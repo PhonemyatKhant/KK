@@ -4,10 +4,10 @@ import Link from "next/link";
 function ProductCard({ product }) {
   return (
     <Link href={`/collections/${product._id}`}>
-      <div className="shadow-md rounded-lg overflow-hidden h-64 sm:h-96">
+      <div className="border rounded-lg overflow-hidden h-64 sm:h-96">
         <Image
           className="object-center object-cover h-2/3 w-full rounded-t-lg"
-          src={`${product.image}`}
+          src={`${product?.image}`}
           alt={product.name}
           width={64}
           height={64}

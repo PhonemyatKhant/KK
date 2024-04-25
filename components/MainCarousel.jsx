@@ -17,7 +17,7 @@ const MainCarousel = () => {
     <div>
       <Carousel
         plugins={[plugin.current]}
-        className="flex w-full h-3/6  "
+       
         onMouseEnter={plugin.current.stop}
         onMouseLeave={plugin.current.reset}
       >
@@ -26,7 +26,7 @@ const MainCarousel = () => {
             <CarouselItem key={index}>
               <div className="p-1 ">
                 <Card>
-                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                  <CardContent className="flex aspect-square items-center justify-center">
                     <span className="text-4xl font-semibold">{index + 1}</span>
                   </CardContent>
                 </Card>

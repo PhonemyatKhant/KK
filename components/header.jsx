@@ -38,7 +38,7 @@ function Header() {
   const { cartItems } = useSelector((state) => state.cart);
 
   return (
-    <header className="container bg-white py-4 px-6 flex items-center justify-between border-b border-gray-200 sm:flex-row max-lg:px-4">
+    <header className=" bg-white py-4 px-6 flex items-center justify-between border-b border-gray-200 sm:flex-row max-lg:px-4">
       {/* Header content */}
       <div className="sm:hidden">
         <Sheet key={side}>
