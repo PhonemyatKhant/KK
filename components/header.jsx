@@ -49,7 +49,7 @@ function Header() {
             <SheetHeader>
               <SheetTitle>
                 <Link href="/">
-                  <h1 className="font-bold text-xl text-gray-800">KKFabrics</h1>
+                  <h1 className="  font-medium text-xl text-gray-800">KK Fabrics</h1>
                 </Link>
               </SheetTitle>
               <SheetDescription>
@@ -88,7 +88,7 @@ function Header() {
         </Sheet>
       </div>
       <Link href="/">
-        <h1 className="font-bold text-xl text-gray-800">KKFabrics</h1>
+        <h1 className=" font-medium text-xl text-gray-800">KK Fabrics</h1>
       </Link>
       <nav className="hidden md:flex items-center">
         <Link href="/collections">

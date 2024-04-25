@@ -5,8 +5,8 @@ import ProductShowcase from "@/components/ProductShowcase";
 export default async function Home() {
   return (
     <main>
-      <h1>Main Page</h1>
-      {/* <MainCarousel />   */}
+     
+      <MainCarousel />  
       <ProductShowcase />
       <Banner />
     </main>

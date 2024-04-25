@@ -24,9 +24,10 @@ const ProductShowcase = () => {
     getProducts();
   }, []);
   return (
-    <>
+    <div className="mb-6">
       <ImageShowcase product={newArrivalProducts} title="New Arrivals" message='SEE OUR NEW COLLECTION'/>
-    </>
+      <ImageShowcase product={onSaleProducts} title="Discounts" message='SEE MORE PRODUCTS ON SALE'/>
+    </div>
   );
 };
 

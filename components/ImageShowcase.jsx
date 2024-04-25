@@ -9,7 +9,7 @@ const ImageShowcase = ({ product, title, message }) => {
   console.log(product);
   return (
     <div>
-      <h1 className=" text-3xl font-semibold my-3">{title} </h1>
+      <h1 className=" text-3xl  my-3">{title} </h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 justify-center pt-5">
         {product.map((p) => (
