@@ -14,14 +14,17 @@ import { data } from "autoprefixer";
 import { useEffect, useState } from "react";
 import { columns } from "./columns";
 
-const ProfilePage = ({params}) => {
-  const [orders,setOrders] = useState([])
-  const userId = params.userId
-  const { data: session } = useSession();
+const ProfilePage = ({ params }) => {
+  const [orders, setOrders] = useState([]);
+  const userId = params.userId;
+  const { status, data: session } = useSession();
+  console.log(session?.user);
   useEffect(() => {
     const getCustomerOrders = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/orders/profile/${userId}`);
+        const res = await fetch(
+          `http://localhost:3000/api/orders/profile/${userId}`
+        );
         if (!res.ok) {
           throw new Error("Failed to fetch customer order");
         }
@@ -53,13 +56,12 @@ const ProfilePage = ({params}) => {
                 Email :{" "}
                 <span className=" text-black ">{session?.user?.email}</span>
               </h1>
-              
             </CardContent>
           </Card>
         </div>
         <div className=" mx-auto py-10">
-        <DataTable columns={columns} data={orders}  type="order" />
-      </div>
+          <DataTable columns={columns} data={orders} type="order" />
+        </div>
       </div>
       <div className="container mx-auto py-10"></div>
     </>

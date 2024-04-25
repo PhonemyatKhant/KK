@@ -160,7 +160,7 @@ function Header() {
             </>
           ) : (
             <Button variant={"default"} size={"sm"}>
-              <span onClick={() => signIn("google")}>Sign In</span>
+              <span onClick={() => signIn()}>Sign In</span>
             </Button>
           )}
         </Link>
@@ -218,7 +218,7 @@ function Header() {
           </>
         ) : (
           <Button variant={"default"} size={"sm"}>
-            <span onClick={() => signIn("google")}>Sign In</span>
+            <span onClick={() => signIn()}>Sign In</span>
           </Button>
         )}
       </Link>
