@@ -32,7 +32,7 @@ const CartPage = () => {
     dispatch(removeFromCart(id));
   }
   const { cartItems, itemsPrice } = useSelector((state) => state.cart);
-  // console.log(cartItems);
+  console.log(cartItems);
   return (
     <div className="mt-7 lg:px-32 ">
       <h1 className=" text-2xl mb-6">Shopping Cart</h1>
