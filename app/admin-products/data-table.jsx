@@ -57,9 +57,9 @@ export function DataTable({ columns, data, type }) {
         ) : (
           <Input
             placeholder="Filter orders..."
-            value={table.getColumn("city")?.getFilterValue() ?? ""}
+            value={table.getColumn("firstName")?.getFilterValue() ?? ""}
             onChange={(event) =>
-              table.getColumn("city")?.setFilterValue(event.target.value)
+              table.getColumn("firstName")?.setFilterValue(event.target.value)
             }
             className="max-w-sm"
           />

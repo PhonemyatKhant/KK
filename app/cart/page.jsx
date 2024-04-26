@@ -32,9 +32,9 @@ const CartPage = () => {
     dispatch(removeFromCart(id));
   }
   const { cartItems, itemsPrice } = useSelector((state) => state.cart);
-  console.log(cartItems);
+  // console.log(cartItems);
   return (
-    <div className="container mt-7 lg:px-32 ">
+    <div className="mt-7 lg:px-32 ">
       <h1 className=" text-2xl mb-6">Shopping Cart</h1>
       <div className="flex justify-between gap-7 max-lg:flex-col">
         <div className="flex flex-col flex-1">
@@ -58,7 +58,7 @@ const CartPage = () => {
                   </div>
 
                   <Link
-                    className=" hover:cursor-pointer underline flex-wrap  mx-1 max-w-64 w-40"
+                    className=" hover:cursor-pointer underline flex-wrap  mx-1  max-sm:max-w-[50px] w-40"
                     href={`/collections/${item._id}`}
                   >
                     <span>{item.name} </span>

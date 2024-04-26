@@ -31,7 +31,7 @@ const Paginations = ({ pages }) => {
   const { page } = useSelector((state) => state.pagination);
 
   return (
-    <Pagination className="col-span-full">
+    <Pagination className="col-span-full mb-6">
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious onClick={() => decrease(pages)} />

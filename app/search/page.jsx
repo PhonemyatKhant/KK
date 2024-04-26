@@ -17,6 +17,8 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useSelector } from "react-redux";
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
+import { FaSlidersH } from "react-icons/fa";
 
 const SearchPage = ({ searchParams }) => {
   const [allProducts, setAllProducts] = useState([]);
@@ -65,68 +67,76 @@ const SearchPage = ({ searchParams }) => {
   }, [searchParams.query, pageNumber, viewOutOfStock, brand, category]);
 
   return (
-    <div className="container gap-5 flex mx-auto px-4">
+    <>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <>
-          {allProducts.length !== 0 && (
-            <Sidebar
-              categoryOptions={sideBarValues.categoryOptions}
-              brandOptions={sideBarValues.brandOptions}
-              maxPrice={sideBarValues.maxPrice}
-              sidebarData={sideBarValues}
-            />
-          )}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5">
-            <SearchBar
-              setSearchQuery={setSearchQuery}
-              searchQuery={searchQuery}
-            />
-            {allProducts.length > 0 ? (
-              <>
-                <h2 className="col-span-full">
-                  Search results for: "{searchQuery}"
-                </h2>
-                {allProducts.map((product) => (
-                  <ProductCard key={product._id} product={product} />
-                ))}
-              </>
-            ) : (
-              <p>No results found for your search.</p>
-            )}
-            {/* <Paginations pages={pages} /> */}
-            <Pagination className="col-span-full">
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
-                    onClick={() => setPageNumber((prev) => (prev -= 1))}
-                  />
-                </PaginationItem>
-                <PaginationItem>
-                  {Array.from({ length: pages }).map((_, index) => (
-                    <PaginationLink
-                      key={index}
-                      onClick={() => setPageNumber(index + 1)}
-                    >
-                      {index + 1}
-                    </PaginationLink>
-                  ))}
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationNext
-                    onClick={() => setPageNumber((prev) => (prev += 1))}
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5">
+          <div className=" text-sm col-span-full max-w-[100px]">
+            <Sheet>
+              <SheetTrigger>
+                <span className="flex items-center gap-2">
+                  <FaSlidersH />
+                  filter
+                </span>
+              </SheetTrigger>
+              {allProducts.length !== 0 && (
+                <Sidebar
+                  categoryOptions={sideBarValues.categoryOptions}
+                  brandOptions={sideBarValues.brandOptions}
+                  maxPrice={sideBarValues.maxPrice}
+                  sidebarData={sideBarValues}
+                />
+              )}
+            </Sheet>
           </div>
-        </>
+          <SearchBar
+            setSearchQuery={setSearchQuery}
+            searchQuery={searchQuery}
+          />
+          {allProducts.length > 0 ? (
+            <>
+              <h2 className="col-span-full">
+                Search results for: "{searchQuery}"
+              </h2>
+              {allProducts.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </>
+          ) : (
+            <p>No results found for your search.</p>
+          )}
+          {/* <Paginations pages={pages} /> */}
+          <Pagination className="col-span-full mb-6">
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => setPageNumber((prev) => (prev -= 1))}
+                />
+              </PaginationItem>
+              <PaginationItem>
+                {Array.from({ length: pages }).map((_, index) => (
+                  <PaginationLink
+                    key={index}
+                    onClick={() => setPageNumber(index + 1)}
+                  >
+                    {index + 1}
+                  </PaginationLink>
+                ))}
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => setPageNumber((prev) => (prev += 1))}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
       )}
-    </div>
+    </>
     // <h1> {`The serach query is ${searchParams.query} and filter is ${searchParams.filter}`} </h1>
   );
 };

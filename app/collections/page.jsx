@@ -9,6 +9,9 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetFilter } from "../redux/slices/filterSlice";
+import { FaSlidersH } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 
 export async function getProducts() {
   const apiEndpoint = process.env.API_ENDPOINT;
@@ -57,6 +60,7 @@ const CollectionPage = ({ searchParams }) => {
     brandOptions: [],
     maxPrice: 0,
   });
+  const [openSlider, setOpenSlider] = useState(false);
   const [filterQuery, setFilterQuery] = useState({
     viewOutOfStock: false,
     brand: "",
@@ -101,23 +105,33 @@ const CollectionPage = ({ searchParams }) => {
   }, [page]);
 
   return (
-    <div className="container gap-5 flex mx-auto px-4">
-      {products.length !== 0 && (
-        <Sidebar
-          categoryOptions={sideBarValues.categoryOptions}
-          brandOptions={sideBarValues.brandOptions}
-          maxPrice={sideBarValues.maxPrice}
-          filterQuery={filterQuery}
-          setFilterQuery={setFilterQuery}
-        />
-      )}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5">
-        <SearchBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
-        {products.map((product) => (
-          <ProductCard key={product._id} product={product} />
-        ))}
-        <Paginations pages={pages} />
+    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5 container px-4">
+      <div className=" text-sm col-span-full max-w-[100px]">
+        <Sheet>
+          <SheetTrigger>
+            <span className="flex items-center gap-2">
+              <FaSlidersH />
+              filter
+            </span>
+          </SheetTrigger>
+          {products.length !== 0 ? (
+            <Sidebar
+              categoryOptions={sideBarValues.categoryOptions}
+              brandOptions={sideBarValues.brandOptions}
+              maxPrice={sideBarValues.maxPrice}
+              filterQuery={filterQuery}
+              setFilterQuery={setFilterQuery}
+            />
+          ) : (
+            <></>
+          )}
+        </Sheet>
       </div>
+      <SearchBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
+      {products.map((product) => (
+        <ProductCard key={product._id} product={product} />
+      ))}
+      <Paginations pages={pages} />
     </div>
   );
 };

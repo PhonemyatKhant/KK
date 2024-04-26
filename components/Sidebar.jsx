@@ -16,6 +16,15 @@ import {
 } from "@/app/redux/slices/filterSlice";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
 const Sidebar = ({
   brandOptions,
   categoryOptions,
@@ -47,93 +56,94 @@ const Sidebar = ({
   };
 
   return (
-    <aside className=" w-4/12 bg-white h-screen">
-      <div className=" p-3 overflow-y-auto rounded h-full flex flex-col">
-        <ul className="flex items-center justify-between p-4">
-          <span>Out of Stock</span>{" "}
-          <Switch
-            checked={viewOutOfStock}
-            onCheckedChange={(value) => toggleOOSProducts(value)}
-          />
-        </ul>
-        <Separator />
-        <ul className="flex flex-col p-4">
-          <span>Brand</span>
+    <SheetContent side="left">
+      <SheetHeader>
+        <SheetTitle>
+          <div className="flex justify-between py-4">
+            <span>Out of Stock</span>{" "}
+            <Switch
+              checked={viewOutOfStock}
+              onCheckedChange={(value) => toggleOOSProducts(value)}
+            />
+          </div>
+        </SheetTitle>
 
-          <ToggleGroup
-            defaultValue={brand}
-            onValueChange={(value) => {
-              toggleBrandHandler(value);
-            }}
-            className="flex flex-wrap"
-            type="single"
-            size="sm"
-          >
-            {brandOptions.map((option, index) => (
-              <ToggleGroupItem
-                variant="outline"
-                key={index}
-                value={option}
-                aria-label={option}
-              >
-                {option}{" "}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
-        </ul>
+        <h1 className=" font-semibold my-2">Brand</h1>
+
+        <ToggleGroup
+          defaultValue={brand}
+          onValueChange={(value) => {
+            toggleBrandHandler(value);
+          }}
+          className="flex flex-wrap justify-normal py-4"
+          type="single"
+          size="sm"
+        >
+          {brandOptions.map((option, index) => (
+            <ToggleGroupItem
+              variant="outline"
+              key={index}
+              value={option}
+              aria-label={option}
+            >
+              {option}{" "}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+
         <Separator />
         {/* category toggle group */}
-        <ul className="flex flex-col p-4">
-          <span>Category</span>
-          <ToggleGroup
-            defaultValue={category}
-            onValueChange={(value) => {
-              toggleCategoryHandler(value);
-            }}
-            className="flex flex-wrap"
-            type="single"
-            size="sm"
-          >
-            {categoryOptions.map((option, index) => (
-              <ToggleGroupItem
-                variant="outline"
-                key={index}
-                value={option}
-                aria-label={option}
-              >
-                {option}{" "}
-              </ToggleGroupItem>
-            ))}
-          </ToggleGroup>
-        </ul>
-        <Separator />
 
-        <ul className="flex flex-col p-4">
-          <div className="flex flex-wrap gap-1 mt-1">
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="maxlength">
-                  {" "}
-                  <span>Maximum Price</span>
-                </Label>
-                <span className="w-auto rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">
-                  {value}
-                  <span> K</span>
-                </span>
+        <h1 className=" font-semibold my-2">Category</h1>
+        <ToggleGroup
+          defaultValue={category}
+          onValueChange={(value) => {
+            toggleCategoryHandler(value);
+          }}
+          className="flex flex-wrap justify-normal py-4"
+          type="single"
+          size="sm"
+        >
+          {categoryOptions.map((option, index) => (
+            <ToggleGroupItem
+              variant="outline"
+              key={index}
+              value={option}
+              aria-label={option}
+            >
+              {option}{" "}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
+
+        <Separator className="  my-6" />
+
+        {/* <div className="flex flex-col p-4">
+            <div className="flex flex-wrap gap-1 mt-1">
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="maxlength">
+                    {" "}
+                    <span>Maximum Price</span>
+                  </Label>
+                  <span className="w-auto rounded-md border border-transparent px-2 py-0.5 text-right text-sm text-muted-foreground hover:border-border">
+                    {value}
+                    <span> K</span>
+                  </span>
+                </div>
+                <Slider
+                  id="maxlength"
+                  onValueChange={setValue}
+                  defaultValue={[maxPrice]}
+                  max={maxPrice}
+                  step={500}
+                />
               </div>
-              <Slider
-                id="maxlength"
-                onValueChange={setValue}
-                defaultValue={[maxPrice]}
-                max={maxPrice}
-                step={500}
-              />
             </div>
-          </div>
-        </ul>
-        <Separator />
-      </div>
-    </aside>
+          </div> */}
+        {/* <Separator /> */}
+      </SheetHeader>
+    </SheetContent>
   );
 };
 

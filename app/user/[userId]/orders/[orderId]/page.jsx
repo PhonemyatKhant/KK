@@ -30,12 +30,12 @@ const OrderDetailsPage = ({ params }) => {
 
   if (order) {
     return (
-      <div className="container my-7 ">
+      <div className=" my-7 ">
         <p className="text-sm text-muted-foreground mb-3">
           Thank you. Your order has been received. The items will be shipped
           using Royal Express delivery service to your address.
         </p>
-        <div className="flex h-5 items-center space-x-4 text-sm">
+        <div className="flex flex-wrap items-center gap-2 text-sm">
           <OrderHeader title="DATE" value={order.createdAt.slice(0, 10)} />
           <OrderHeader
             title="NAME"
@@ -137,7 +137,7 @@ const OrderDetailsPage = ({ params }) => {
             />
           </div>
         </div>
-        <div className="flex my-9 h-5 items-center space-x-4 text-sm flex-wrap gap-2">
+        <div className="flex my-9 justify-normal items-center space-x-4 text-sm flex-wrap gap-2">
           <OrderHeader title="ORDER ID" value={orderId} />
           <OrderHeader
             title="PAYMENT STATUS"

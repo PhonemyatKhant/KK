@@ -35,12 +35,12 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
   };
   return (
     <>
-      <div className="flex flex-start container mt-4">
+      <div className="flex flex-start  mt-4">
         <Button variant={"secondary"} onClick={() => router.back()}>
           Back
         </Button>
       </div>
-      <div className="container max-w-4xl mx-auto py-8">
+      <div className=" max-w-4xl mx-auto py-8">
         <h2 className="text-2xl font-bold mb-4">{type} Product</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid w-full max-w-lg items-center gap-1.5">

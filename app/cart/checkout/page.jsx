@@ -80,7 +80,7 @@ const CheckOutPage = () => {
     }
   };
   return (
-    <div className=" container grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-4">
+    <div className=" grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-4">
       <div className=" col-span-4">
         <h1 className=" text-3xl font-semibold my-3">Payment</h1>
         <div className=" max-w-[500px] ">

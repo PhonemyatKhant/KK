@@ -14,8 +14,8 @@ export const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGO_URI, {
             dbName: "KKFabrics",
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            // useNewUrlParser: true,
+            // useUnifiedTopology: true,
         })
 
         isConnected = true;

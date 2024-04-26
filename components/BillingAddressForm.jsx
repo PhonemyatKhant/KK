@@ -133,7 +133,7 @@ const BillingAddressForm = ({
                 }));
               }}
             >
-              <SelectTrigger className=" w-1/2">
+              <SelectTrigger className=" w-[250px] ">
                 <SelectValue placeholder="Select a payment method" />
               </SelectTrigger>
               <SelectContent>

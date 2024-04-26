@@ -26,7 +26,7 @@ const page = () => {
   console.log(products);
   return (
     <>
-      <div className="container flex justify-between mt-4">
+      <div className=" flex justify-between mt-4">
         <h1 className="text-2xl">All Products</h1>
         <Link href="/admin-products/create-product">
           <Button variant="ghost">Create Product</Button>
@@ -34,7 +34,7 @@ const page = () => {
       </div>
 
       {products && (
-        <div className="container mx-auto py-10">
+        <div className=" mx-auto py-10">
           <DataTable columns={columns} data={products} />
         </div>
       )}

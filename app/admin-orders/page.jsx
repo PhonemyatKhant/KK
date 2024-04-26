@@ -10,10 +10,10 @@ const AdminPrderPage = async () => {
 
   return (
     <>
-      <div className="container flex justify-between mt-4">
+      <div className=" flex justify-between mt-4">
         <h1 className="text-2xl">All Orders</h1>
       </div>
-      <div className="container mx-auto py-10">
+      <div className=" mx-auto py-10">
         <DataTable columns={columns} data={orders} type="order" />
       </div>
     </>

@@ -51,7 +51,9 @@ export const columns = [
             return (
                 percentage !== undefined ? <Badge>{`${percentage} %`}</Badge> : <Badge variant={'destructive'}>false</Badge>
             )
-        }
+        },
+        
+       
     },
     {
         accessorKey: "category",
@@ -92,10 +94,10 @@ export const columns = [
             const handleEdit = (product) => {
 
                 router.push(`/admin-products/edit-product?productId=${product._id}`);
-                console.log('edit');
+                // console.log('edit');
             }
             const handleDelete = async (product) => {
-                console.log('delete');
+                // console.log('delete');
                 const hasConfirmed = confirm(
                     "Are you sure you want to delete this prompt?"
                 );
@@ -106,7 +108,7 @@ export const columns = [
                             method: "DELETE",
                         });
                         const products = await getProducts()
-                        console.log(products);
+                        // console.log(products);
                         // const filteredPosts = myPosts.filter((item) => item._id !== post._id);
 
                         // setMyPosts(filteredPosts);

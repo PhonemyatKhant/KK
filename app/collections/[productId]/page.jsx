@@ -78,12 +78,12 @@ const ProductDetailsPage = ({ params }) => {
   if (product) {
     return (
       <>
-        <div className="flex flex-start container mt-4">
+        <div className="flex flex-start mt-4">
           <Button variant={"secondary"} onClick={() => router.back()}>
             Back
           </Button>
         </div>
-        <div className="container flex flex-col md:flex-row items-center gap-10 mx-auto py-10 max-w-screen-xl">
+        <div className=" flex flex-col md:flex-row items-center gap-10 mx-auto py-10 max-w-screen-xl">
           <div className="flex-1 container h-96 w-full  max-w-sm md:w-1/2">
             <Image
               className="object-fill h-full w-full rounded-lg shadow-md"
@@ -172,7 +172,7 @@ const ProductDetailsPage = ({ params }) => {
             <p className="text-gray-500">{product?.description}</p>
           </div>
         </div>
-        <div className="flex flex-wrap justify-between container items-start">
+        <div className="flex gap-2 flex-wrap justify-between container items-start">
           <AllReviews reviews={product.reviews} />
           <RateAndReview productId={pId} />
         </div>

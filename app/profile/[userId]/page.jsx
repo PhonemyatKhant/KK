@@ -39,7 +39,7 @@ const ProfilePage = ({ params }) => {
   }, [userId]);
   return (
     <>
-      <div className="container mt-4">
+      <div className="mt-4">
         <h1 className="text-2xl my-4">Profile</h1>
         <div className="flex justify-between gap-4">
           <Card>
@@ -63,7 +63,7 @@ const ProfilePage = ({ params }) => {
           <DataTable columns={columns} data={orders} type="order" />
         </div>
       </div>
-      <div className="container mx-auto py-10"></div>
+      
     </>
   );
 };
