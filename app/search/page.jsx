@@ -27,7 +27,8 @@ const SearchPage = ({ searchParams }) => {
   const { viewOutOfStock, brand, category } = useSelector(
     (state) => state.filter
   );
-  // console.log(brand, category);
+
+  console.log(brand, category);
   const [pages, setPages] = useState(1);
   const [pageNumber, setPageNumber] = useState(1);
 
