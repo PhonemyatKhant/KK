@@ -11,57 +11,39 @@ import "@/app/globals.css";
 
 // import required modules
 import { Navigation } from "swiper/modules";
-import image1 from "@/public/assets/fabricspic1.jpg";
-import image2 from "@/public/assets/fabricspic2.jpg";
+import { images } from "@/utils/images";
 import Image from "next/image";
 import { Button } from "./ui/button";
-import Link from "next/link";
 
 const MainCarousel = () => {
   return (
-    <>
-      <Swiper
-        navigation={true}
-        modules={[Navigation]}
-        className="mySwiper h-[600px] max-sm:h-[400px] w-full"
-      >
-        <SwiperSlide className=" relative">
+    <Swiper
+      navigation={true}
+      modules={[Navigation]}
+      className="mySwiper h-[600px] w-full"
+    >
+      {images.map((image, index) => (
+        <SwiperSlide className=" relative" key={index}>
           <div className="flex h-full w-full items-center justify-center">
             <Image
-              src={image1}
-              alt="fabric1"
+              src={image}
+              alt={index}
               className="w-full h-full object-cover block "
             />{" "}
           </div>
-          <div className="absolute inset-x-0 bottom-36 flex items-center justify-center">
+          <div className="absolute top-1/2  -left-3/4 transform -translate-x-1/2 -translate-y-1/2 ">
             <div className="flex flex-wrap gap-4">
-              <Link href="/collections">
-                {" "}
-                <Button variant="outline">SHOP NOW</Button>
-              </Link>
+            <Button size="lg" variant="outline">
+              About Us
+            </Button>
+            <Button size="lg" variant="outline">
+              View Collections
+            </Button>
             </div>
           </div>
         </SwiperSlide>
-
-        <SwiperSlide className=" relative">
-          <div className="flex h-full w-full items-center justify-center">
-            <Image
-              src={image2}
-              alt="fabric2"
-              className="w-full h-full object-cover block "
-            />{" "}
-          </div>
-          <div className="absolute inset-x-0 bottom-36 flex items-center justify-center">
-            <div className="flex flex-wrap gap-4">
-              <Link href="/about-us">
-                {" "}
-                <Button variant="outline">ABOUT US</Button>
-              </Link>
-            </div>
-          </div>
-        </SwiperSlide>
-      </Swiper>
-    </>
+      ))}
+    </Swiper>
   );
 };
 

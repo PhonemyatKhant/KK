@@ -7,7 +7,6 @@ import React from "react";
 
 const AdminPrderPage = async () => {
   const orders = await getOrders();
-  
 
   return (
     <>

@@ -12,8 +12,6 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { FaSadCry } from "react-icons/fa";
 
 const CheckOutPage = () => {
   const { data: session } = useSession();
@@ -81,16 +79,6 @@ const CheckOutPage = () => {
       setIsSubmitting(false);
     }
   };
-  if (cartItems.length === 0)
-    return (
-      <Alert variant='destructive' >
-        <FaSadCry />
-        <AlertTitle>Add Items To The Cart To Check Out!</AlertTitle>
-        <AlertDescription>
-          You can add items to your cart using the add to cart button.
-        </AlertDescription>
-      </Alert>
-    );
   return (
     <div className=" grid gap-4 md:grid-cols-2 lg:grid-cols-7 mt-4">
       <div className=" col-span-4">

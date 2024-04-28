@@ -22,8 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { addToCart, removeFromCart } from "../redux/slices/cartSlice";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { FaSadCry } from "react-icons/fa";
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -34,16 +32,7 @@ const CartPage = () => {
     dispatch(removeFromCart(id));
   }
   const { cartItems, itemsPrice } = useSelector((state) => state.cart);
-  if (cartItems.length === 0)
-    return (
-      <Alert variant='destructive' >
-        <FaSadCry />
-        <AlertTitle>No items in your cart!</AlertTitle>
-        <AlertDescription>
-          You can add items to your cart using the add to cart button.
-        </AlertDescription>
-      </Alert>
-    );
+  console.log(cartItems);
   return (
     <div className="mt-7 lg:px-32 ">
       <h1 className=" text-2xl mb-6">Shopping Cart</h1>
@@ -77,12 +66,7 @@ const CartPage = () => {
                 </div>
 
                 {/* <p className=" max-w-20 flex-wrap text-sm ">{item.brand}</p> */}
-                <p className=" pt-2 text-sm">
-                  {((100 - item.discountPercentage) / 100) *
-                    item.price *
-                    item.quantity}{" "}
-                  K{" "}
-                </p>
+                <p className=" pt-2 text-sm">{(((100 - item.discountPercentage) / 100) * item.price)*item.quantity} K </p>
                 <div className=" mx-5 w-[70px]">
                   {" "}
                   <Select

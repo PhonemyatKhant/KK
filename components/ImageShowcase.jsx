@@ -20,7 +20,7 @@ const ImageShowcase = ({ product, title, message }) => {
         {" "}
         <Link className="mx-auto my-4" href="/collections">
           {" "}
-          <Button variant="link" className='font-semibold'  >
+          <Button  >
             {message} <ArrowUpRight />
           </Button>
         </Link>
