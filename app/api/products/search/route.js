@@ -17,7 +17,7 @@ export async function GET(req) {
     const category = req.nextUrl.searchParams.get('category') || ""
     const toggleState = req.nextUrl.searchParams.get('viewOOS') || false
 
-    console.log(brand, category);
+    console.log(brand, "from route");
 
     const escapedUserInput = escapeRegExp(userInput);
     const escapedBrandInput = escapeRegExp(brand);
@@ -41,7 +41,7 @@ export async function GET(req) {
                 },
                 { category: { $regex: regexPatternCategory } },
                 { brand: { $regex: regexPatternBrand } },
-                { price: { $lte: 10000 } },
+                // { price: { $lte: 10000 } },
 
             ]
         }
@@ -51,6 +51,7 @@ export async function GET(req) {
         if (viewOutOfStock === false) {
             query["$and"].push({ "countInStock": { "$not": { "$eq": 0 } } });
         }
+        // console.log(query);
         const products = await Product.find(query).skip((page - 1) * productsPerPage).limit(productsPerPage)
         const count = await Product.find(query).countDocuments()
         console.log(Math.ceil(count / productsPerPage));

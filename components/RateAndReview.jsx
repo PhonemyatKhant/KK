@@ -27,7 +27,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 const RateAndReview = ({ productId }) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const { toast } = useToast();
   const [review, setReview] = useState({
@@ -39,38 +39,41 @@ const RateAndReview = ({ productId }) => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await fetch(`/api/products/${productId}/review`, {
-        method: "PATCH",
-        body: JSON.stringify({
-          review,
-        }),
-      });
+    if (status !== "unauthenticated") {
+      try {
+        const response = await fetch(`/api/products/${productId}/review`, {
+          method: "PATCH",
+          body: JSON.stringify({
+            review,
+          }),
+        });
 
-      if (response.ok) {
-        router.refresh();
-      }
-      if (response.status === 400) {
-        toast({
-          title: "Product Already Reviewed",
-          action: <ToastAction altText="Goto schedule to undo">OK</ToastAction>,
+        if (response.ok) {
+          router.refresh();
+        }
+        if (response.status === 400) {
+          toast({
+            title: "Product Already Reviewed",
+            action: (
+              <ToastAction altText="Goto schedule to undo">OK</ToastAction>
+            ),
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setReview({
+          name: "",
+          rating: 0,
+          comment: "",
+          user: "",
         });
       }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setReview({
-        name: "",
-        rating: 0,
-        comment: "",
-        user: "",
-      });
     }
   };
 
   return (
     <div className=" w-full max-w-[500px] ">
-      
       <Alert className="mb-5">
         <Pencil1Icon className="h-4 w-4" />
         <AlertTitle>Write a customer review!</AlertTitle>
@@ -104,14 +107,16 @@ const RateAndReview = ({ productId }) => {
             required
             placeholder="Type your review message here."
             id="review"
-            onChange={(e) =>
-              setReview((prevReview) => ({
-                ...prevReview,
-                comment: e.target.value,
-                name: session.user.name,
-                user: session.user.id,
-              }))
-            }
+            onChange={(e) => {
+              if (status !== "unauthenticated") {
+                setReview((prevReview) => ({
+                  ...prevReview,
+                  comment: e.target.value,
+                  name: session.user.name,
+                  user: session.user.id,
+                }));
+              }
+            }}
             value={review.comment}
           />
         </div>

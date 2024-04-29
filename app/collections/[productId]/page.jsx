@@ -128,18 +128,7 @@ const ProductDetailsPage = ({ params }) => {
               <label htmlFor="quantity" className="mr-2 text-gray-700">
                 Quantity:
               </label>
-              {/* <input
-                id="quantity"
-                type="number"
-                min={1}
-                max={product?.countInStock}
-                value={quantity}
-                onChange={(e) => {
-                  setQuantity(Number(e.target.value));
-                  console.log(quantity);
-                }}
-                className="px-3 py-2 rounded-md border border-gray-300 shadow-sm"
-              /> */}
+             
               <div className=" mx-1 w-[70px]">
                 {" "}
                 <Select
