@@ -55,7 +55,7 @@ const RateAndReview = ({ productId }) => {
           toast({
             title: "Product Already Reviewed",
             action: (
-              <ToastAction altText="Goto schedule to undo">OK</ToastAction>
+              <ToastAction altText="undo">OK</ToastAction>
             ),
           });
         }

@@ -16,12 +16,13 @@ const NormalInputField = ({
       <Label className="text-sm font-semibold" htmlFor={id}>
         {label}
       </Label>
-      {required ? (
+      {type == "number" ? (
         <Input
           id={id}
           type={type}
           placeholder={placeholder}
           required
+          min="1"
           value={value}
           onChange={onChange}
         />
@@ -31,6 +32,7 @@ const NormalInputField = ({
           type={type}
           placeholder={placeholder}
           value={value}
+          required
           onChange={onChange}
         />
       )}

@@ -99,7 +99,7 @@ export const columns = [
             const handleDelete = async (product) => {
                 // console.log('delete');
                 const hasConfirmed = confirm(
-                    "Are you sure you want to delete this prompt?"
+                    "Are you sure you want to delete this product?"
                 );
 
                 if (hasConfirmed) {

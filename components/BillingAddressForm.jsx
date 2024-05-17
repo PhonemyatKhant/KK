@@ -106,16 +106,17 @@ const BillingAddressForm = ({
               value={formData.apartment}
             />
             <NormalInputField
-              type="text"
+              type="number"
               label="Postal Code"
               id="postalCode"
+              
               placeholder="Postal Code"
               required={true}
               onChange={handleChange}
               value={formData.postalCode}
             />
             <NormalInputField
-              type="text"
+              type="number"
               label="Phone"
               id="phone"
               placeholder="Phone"
