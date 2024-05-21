@@ -53,6 +53,9 @@ export const getUniqueValues = (productsArray) => {
 
 const CollectionPage = ({ searchParams }) => {
   const [products, setProducts] = useState([]);
+
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [pages, setPages] = useState();
   const [searchQuery, setSearchQuery] = useState(searchParams.query || "");
   const [sideBarValues, setSideBarValues] = useState({
@@ -60,7 +63,7 @@ const CollectionPage = ({ searchParams }) => {
     brandOptions: [],
     maxPrice: 0,
   });
-  const [openSlider, setOpenSlider] = useState(false);
+
   const [filterQuery, setFilterQuery] = useState({
     viewOutOfStock: false,
     brand: "",
@@ -68,13 +71,6 @@ const CollectionPage = ({ searchParams }) => {
     price: 0,
   });
   const { page } = useSelector((state) => state.pagination);
-  // const dispatch = useDispatch()
-
-  // const resetFilterHandler = async () => {
-  //   dispatch(resetFilter());
-  // };
-
-  // resetFilterHandler();
 
   useEffect(() => {
     const allProducts = async () => {
@@ -83,13 +79,17 @@ const CollectionPage = ({ searchParams }) => {
       const res = await fetch(
         `http://localhost:3000/api/products?p=${pageNumber}`
       );
-      if (!res.ok) {
-        throw new Error("Failed to fetch data");
-      }
 
       const { products, pages } = await res.json();
-
+      if (!res.ok) {
+        setError(res);
+        console.log(error);
+        if (error !== null) {
+          return <h1>error</h1>;
+        }
+      }
       setProducts(products);
+      setLoading(false);
       //get buttons
       if (products.length !== 0) {
         const { categoryOptions, brandOptions, maxPrice } =
@@ -105,33 +105,42 @@ const CollectionPage = ({ searchParams }) => {
   }, [page]);
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5 container px-4">
-      <div className=" text-sm col-span-full max-w-[100px]">
-        <Sheet>
-          <SheetTrigger>
-            <span className="flex items-center gap-2">
-              <FaSlidersH />
-              filter
-            </span>
-          </SheetTrigger>
-          {products.length !== 0 ? (
-            <Sidebar
-              categoryOptions={sideBarValues.categoryOptions}
-              brandOptions={sideBarValues.brandOptions}
-              maxPrice={sideBarValues.maxPrice}
-              filterQuery={filterQuery}
-              setFilterQuery={setFilterQuery}
-            />
-          ) : (
-            <></>
-          )}
-        </Sheet>
-      </div>
-      <SearchBar setSearchQuery={setSearchQuery} searchQuery={searchQuery} />
-      {products.map((product) => (
-        <ProductCard key={product._id} product={product} />
-      ))}
-      <Paginations pages={pages} />
+    <div className=" min-h-screen">
+      {loading === false ? (
+        <div className="  grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-center pt-5 container px-4">
+          <div className=" text-sm col-span-full max-w-[100px]">
+            <Sheet>
+              <SheetTrigger>
+                <span className="flex items-center gap-2">
+                  <FaSlidersH />
+                  filter
+                </span>
+              </SheetTrigger>
+              {products.length !== 0 ? (
+                <Sidebar
+                  categoryOptions={sideBarValues.categoryOptions}
+                  brandOptions={sideBarValues.brandOptions}
+                  maxPrice={sideBarValues.maxPrice}
+                  filterQuery={filterQuery}
+                  setFilterQuery={setFilterQuery}
+                />
+              ) : (
+                <></>
+              )}
+            </Sheet>
+          </div>
+          <SearchBar
+            setSearchQuery={setSearchQuery}
+            searchQuery={searchQuery}
+          />
+          {products.map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))}
+          <Paginations pages={pages} />
+        </div>
+      ) : (
+        <h1 className=" min-h-screen">Loading...</h1>
+      )}
     </div>
   );
 };

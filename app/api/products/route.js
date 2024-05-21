@@ -2,17 +2,13 @@
 import { connectDB } from "@/utils/db";
 import Product from "@/models/productModel";
 export async function GET(req) {
-    // console.log(req.nextUrl.searchParams.get('p'), 'req');
-    // const { page = 1, pageSize = 10 } = req.query;
     const page = req.nextUrl.searchParams.get('p') || 1
 
     const productsPerPage = 8
 
-
-
-
     try {
-        await connectDB(); // Connect to MongoDB
+        await connectDB(); 
+
         const count = await Product.countDocuments()
         const products = await Product.find().skip((page - 1) * productsPerPage).limit(productsPerPage);
         return new Response(JSON.stringify({ products, page, pages: Math.ceil(count / productsPerPage) }), {
@@ -22,8 +18,7 @@ export async function GET(req) {
             },
         });
     } catch (error) {
-        console.error("Error fetching products:", error);
-        return new Response("Failed to fetch products", { status: 500 });
+        return new Response(error.message, { status: 500 });
     }
 }
 
