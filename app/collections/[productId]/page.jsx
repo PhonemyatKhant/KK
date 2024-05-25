@@ -33,8 +33,9 @@ const ProductDetailsPage = ({ params }) => {
 
   useEffect(() => {
     const getProduct = async () => {
+      const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
       try {
-        const res = await fetch(`http://localhost:3000/api/products/${pId}`);
+        const res = await fetch(`${apiEndpoint}/api/products/${pId}`);
         if (!res.ok) {
           throw new Error("Failed to fetch product");
         }
@@ -128,7 +129,7 @@ const ProductDetailsPage = ({ params }) => {
               <label htmlFor="quantity" className="mr-2 text-gray-700">
                 Quantity:
               </label>
-             
+
               <div className=" mx-1 w-[70px]">
                 {" "}
                 <Select

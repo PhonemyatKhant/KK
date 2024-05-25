@@ -10,9 +10,8 @@ const page = () => {
   const [products, setProducts] = useState();
   useEffect(() => {
     const getAllProducts = async () => {
-      const res = await fetch(
-        `http://localhost:3000/api/products/admin-products`
-      );
+      const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+      const res = await fetch(`${apiEndpoint}/api/products/admin-products`);
       if (!res.ok) {
         throw new Error("Failed to fetch data");
       }

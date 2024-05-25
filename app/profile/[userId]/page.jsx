@@ -22,9 +22,8 @@ const ProfilePage = ({ params }) => {
   useEffect(() => {
     const getCustomerOrders = async () => {
       try {
-        const res = await fetch(
-          `http://localhost:3000/api/orders/profile/${userId}`
-        );
+        const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+        const res = await fetch(`${apiEndpoint}/api/orders/profile/${userId}`);
         if (!res.ok) {
           throw new Error("Failed to fetch customer order");
         }
@@ -63,7 +62,6 @@ const ProfilePage = ({ params }) => {
           <DataTable columns={columns} data={orders} type="order" />
         </div>
       </div>
-      
     </>
   );
 };

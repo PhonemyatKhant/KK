@@ -14,7 +14,8 @@ const OrderDetailsPage = ({ params }) => {
   useEffect(() => {
     const getOrder = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/orders/${orderId}`);
+        const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+        const res = await fetch(`${apiEndpoint}/api/orders/${orderId}`);
         if (!res.ok) {
           throw new Error("Failed to fetch order");
         }

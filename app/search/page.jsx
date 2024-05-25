@@ -41,8 +41,9 @@ const SearchPage = ({ searchParams }) => {
   useEffect(() => {
     setSearchQuery(searchParams.query);
     const allProducts = async () => {
+      const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
       const res = await fetch(
-        `http://localhost:3000/api/products/search?query=${searchParams.query}&p=${pageNumber}&viewOOS=${viewOutOfStock}&brand=${brand}&category=${category}`
+        `${apiEndpoint}/api/products/search?query=${searchParams.query}&p=${pageNumber}&viewOOS=${viewOutOfStock}&brand=${brand}&category=${category}`
       );
       if (!res.ok) {
         throw new Error("Failed to fetch searched product");

@@ -75,10 +75,8 @@ const CollectionPage = ({ searchParams }) => {
   useEffect(() => {
     const allProducts = async () => {
       const pageNumber = page;
-
-      const res = await fetch(
-        `http://localhost:3000/api/products?p=${pageNumber}`
-      );
+      const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
+      const res = await fetch(`${apiEndpoint}/api/products?p=${pageNumber}`);
 
       const { products, pages } = await res.json();
       if (!res.ok) {
