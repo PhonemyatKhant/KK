@@ -9,12 +9,12 @@ import Link from "next/link";
 const ProductShowcase = () => {
   const [newArrivalProducts, setNewArrivalProducts] = useState([]);
   const [onSaleProducts, setOnSaleProducts] = useState([]);
-
+  const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT
   useEffect(() => {
     const getProducts = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3000/api/products/bannerProducts`
+          `${apiEndpoint}/api/products/bannerProducts`
         );
         const { newArrivals, onSaleItems } = await res.json();
 
