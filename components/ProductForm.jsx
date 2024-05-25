@@ -14,13 +14,23 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
     const { id, value } = e.target;
     if (id === "image") {
       setFileToBase(e.target.files[0]);
+    } else if (id === "discountPercentage") {
+      setFormData((prevData) => ({
+        ...prevData,
+        discountPercentage:
+          Number(value) <= 0 ||
+          Number(value) === undefined ||
+          Number(value) === null
+            ? 0
+            : value,
+      }));
     } else {
       setFormData((prevData) => ({
         ...prevData,
         [id]: id !== "sdf" ? value : checked,
       }));
     }
-    // console.log(formData);
+    console.log(typeof formData.discountPercentage);
   };
   const setFileToBase = (file) => {
     console.log(file);
@@ -73,7 +83,7 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
               type="number"
               id="discountPercentage"
               placeholder="Discount Percentage %"
-              value={formData.discountPercentage}
+              value={Number(formData.discountPercentage)}
               onChange={handleChange}
             />
           </div>

@@ -17,7 +17,7 @@ export async function GET(req) {
     const category = req.nextUrl.searchParams.get('category') || ""
     const toggleState = req.nextUrl.searchParams.get('viewOOS') || false
 
-   
+    console.log(brand, "from route");
 
     const escapedUserInput = escapeRegExp(userInput);
     const escapedBrandInput = escapeRegExp(brand);

@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import ImageShowcase from "./ImageShowcase";
 import pic from "@/public/assets/fabricspic3.jpg";
-import Link from "next/link";
-import { Button } from "./ui/button";
 import Image from "next/image";
+import { Button } from "./ui/button";
+import Link from "next/link";
 
 const ProductShowcase = () => {
   const [newArrivalProducts, setNewArrivalProducts] = useState([]);
