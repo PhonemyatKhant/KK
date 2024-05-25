@@ -14,9 +14,9 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 
 export async function getProducts() {
-  const apiEndpoint = process.env.API_ENDPOINT;
+  const apiEndpoint = process.env.NEXT_PUBLIC_API_ENDPOINT;
 
-  const res = await fetch(`http://localhost:3000/api/products`);
+  const res = await fetch(`${apiEndpoint}/api/products`);
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
