@@ -58,6 +58,7 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
             <Label htmlFor="price">Price</Label>
             <Input
               type="number"
+              min='0'
               id="price"
               placeholder="Price"
               value={formData.price}
@@ -95,6 +96,7 @@ const Form = ({ type, formData, setFormData, submitting, handleSubmit }) => {
             <Label htmlFor="countInStock">Count In Stock</Label>
             <Input
               type="number"
+              min="0"
               id="countInStock"
               placeholder="Count In Stock"
               value={formData.countInStock}

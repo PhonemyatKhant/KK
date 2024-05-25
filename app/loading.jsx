@@ -11,7 +11,12 @@ const Loading = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  return <Progress value={progress} className="w-[60%] h-2 mx-auto mt-6" />;
+  return (
+    <div className=" min-h-screen">
+      {" "}
+      <Progress value={progress} className=" w-[60%] h-2 mx-auto mt-6" />
+    </div>
+  );
 };
 
 export default Loading;
