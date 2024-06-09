@@ -7,7 +7,7 @@ const ContactUsPage = () => {
       <h1 className=" text-3xl mb-2">Contact Us</h1>
       <p className=" mb-6">
         If you have any urgant cases regarding payment, shipping and delivery,
-        please contact KK Fabrics' Facebook Messenger.{" "}
+        please contact KK Fabrics`&apos;` Facebook Messenger.{" "}
       </p>
 
       <h1 className=" font-semibold">Phone</h1>

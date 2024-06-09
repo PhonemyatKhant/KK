@@ -7,7 +7,7 @@ const PaymentMethodPage = () => {
       <h1 className=" text-3xl mb-2">Payment Methods</h1>
       <p className=" mb-6">
         Please add KKFabrcs in the note when you make a transaction. Please send
-        the screenshot of the transaction to KK Fabrics's website.{" "}
+        the screenshot of the transaction to KK Fabrics`&apos;`s website.{" "}
       </p>
 
       <h1 className=" font-semibold">KBZ Bank</h1>

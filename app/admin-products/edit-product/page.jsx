@@ -43,7 +43,7 @@ const UpdateProduct = () => {
         isOnSale: data.isOnSale,
       });
     };
-    console.log(formData.isOnSale);
+    
     if (productId) getProductDetails();
   }, [productId]);
 
